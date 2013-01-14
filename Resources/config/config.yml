@@ -1,0 +1,5 @@
+parameters:
+  product_entity: 'ItcKidsBundle:Product\KidsProduct'
+  product_class: 'Itc\KidsBundle\Entity\Product\KidsProduct'
+  group_entity: 'ItcKidsBundle:Product\KidsProductGroup'
+  group_class: 'Itc\KidsBundle\Entity\Product\KidsProductGroup'

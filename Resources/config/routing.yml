@@ -1,0 +1,7 @@
+kids:
+    prefix:   /itc/{_locale}
+    resource: "@ItcKidsBundle/Controller/"
+    type:     annotation
+    defaults: {_locale: %locale% }
+    requirements:
+      _locale : \w{2}        
