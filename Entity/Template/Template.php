@@ -23,7 +23,7 @@ class Template
     /**
      * @ORM\OneToMany (
      * targetEntity="Itc\KidsBundle\Entity\Template\Attr",
-     * mappedBy="templ_id",
+     * mappedBy="templ",
      * cascade={"persist"}
      * )
      */

@@ -43,7 +43,7 @@ class Attr
      */
     private $templ_id;
     /**
-     * @ORM\ManyToOne(targetEntity="Itc\KidsBundle\Entity\Template\Template", inversedBy="id")
+     * @ORM\ManyToOne(targetEntity="Itc\KidsBundle\Entity\Template\Template", inversedBy="attributes")
      * @ORM\JoinColumn(name="templ_id", referencedColumnName="id",
      * onDelete="CASCADE")
      */
