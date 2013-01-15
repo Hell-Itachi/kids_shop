@@ -15,10 +15,13 @@ class KidsProductType extends ProductType {
 
     public function buildForm(\Symfony\Component\Form\FormBuilderInterface $builder, array $options) {
         parent::buildForm($builder, $options);
-        $builder->add('productGroup', 'entity', 
-                    array('class' => 'ItcAdminBundle:Product\ProductGroup',
+         
+        $builder->add('productGroups', 'entity', 
+                    array('class' => 'ItcKidsBundle:Product\KidsProductGroup',
                         'property' => 'title',
                         'multiple' => 'checkboxes',
-                        'expanded' => 'checkboxes'));
+                        'expanded' => 'checkboxes'))
+                ->add('productGroup', null, array('required'=>NULL,"class"=> 'ItcKidsBundle:Product\KidsProductGroup'))
+            ;
     }
 }

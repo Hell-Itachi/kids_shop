@@ -19,9 +19,34 @@ use Doctrine\Common\Collections\ArrayCollection;
  */
 class KidsProduct extends Product
 {
+
     /**
      * @ORM\ManyToMany(targetEntity="Itc\KidsBundle\Entity\Product\KidsProductGroup", inversedBy="products")
-     * @ORM\JoinTable(name="product_group")
+     * @ORM\JoinTable(name="product_groups")
      */    
-    protected $productgroup;
+    protected $productgroups;
+
+
+    public function addProductGroups($productgroups) {
+        $this->productgroups[] = $productgroups;
+    }
+    /**
+     * Remove menus
+     *
+     * @param Itc\KidsBundle\Entity\Product\KidsProductGroup $productgroups
+     */
+    
+    public function removeProductGroups(\Itc\KidsBundle\Entity\Product\KidsProductGroup $productgroups)
+    {
+        $this->productgroups->removeElement($productgroups);
+    }
+    
+    public function getProductGroups() {
+        return $this->productgroups;
+    }
+
+    function __construct() {
+        parent::__construct();
+        $this->productgroups =new ArrayCollection();
+    }
 }

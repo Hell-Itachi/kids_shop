@@ -16,8 +16,12 @@ use Gedmo\Mapping\Annotation as Gedmo;
  */
 class KidsProductGroup extends ProductGroup
 {   
+    function __construct() {
+        parent::__construct();
+    }
+
     /**
-     * @ORM\JoinColumn(name="parent_id", referencedColumnName="id", onDelete="CASCADE", nullable=true)
+     * @ORM\JoinColumn(name="parent_id", referencedColumnName="id", nullable=true)
      * @ORM\ManyToOne(targetEntity="Itc\KidsBundle\Entity\Product\KidsProductGroup", inversedBy="children")
      * 
      */
