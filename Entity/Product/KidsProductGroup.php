@@ -11,23 +11,19 @@ use Gedmo\Mapping\Annotation as Gedmo;
 
 /**
  * KidsProductGroup
- * @Gedmo\Tree(type="closure")
- * @Gedmo\TreeClosure(class="Itc\KidsBundle\Entity\Product\KidsProductGroupClosure")
  * @ORM\Table()
  * @ORM\Entity
  */
 class KidsProductGroup extends ProductGroup
 {   
     /**
-     * @Gedmo\TreeParent
      * @ORM\JoinColumn(name="parent_id", referencedColumnName="id", onDelete="CASCADE", nullable=true)
-     * @ORM\ManyToOne(targetEntity="Itc\KidsBundle\Entity\Product\KidsProduct", inversedBy="children")
+     * @ORM\ManyToOne(targetEntity="Itc\KidsBundle\Entity\Product\KidsProductGroup", inversedBy="children")
      * 
      */
     protected $parent;
-    
     /**
-     * @ORM\OneToMany(targetEntity="Itc\KidsBundle\Entity\Product\KidsProduct", mappedBy="parent")
+     * @ORM\OneToMany(targetEntity="Itc\KidsBundle\Entity\Product\KidsProductGroup", mappedBy="parent")
      **/
     protected $children;    
     /**
