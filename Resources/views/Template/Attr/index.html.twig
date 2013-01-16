@@ -1,0 +1,36 @@
+<h1>Template\Attr list</h1>
+
+<table class="records_list">
+    <thead>
+        <tr>
+            <th>Id</th>
+            <th>Name</th>
+            <th>Type</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+    {% for entity in entities %}
+        <tr>
+            <td>{{ entity.id }}</td>
+            <td>{{ entity.name }}</td>
+            <td>{{ entity.attrtype }}</td>
+            <td>
+                <ul>
+                    <li>
+                        <a href="{{ path('attributs_edit', { 'templid': templid, 'id': entity.id }) }}">edit</a>
+                    </li>
+                </ul>
+            </td>
+        </tr>
+    {% endfor %}
+    </tbody>
+</table>
+
+<ul>
+    <li>
+        <a href="{{ path('attributs_new', { 'templid': templid }) }}">
+            Create a new entry
+        </a>
+    </li>
+</ul>

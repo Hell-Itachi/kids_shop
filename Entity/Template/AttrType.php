@@ -5,12 +5,12 @@ namespace Itc\KidsBundle\Entity\Template;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * Template
+ * AttrType
  *
  * @ORM\Table()
  * @ORM\Entity
  */
-class Template
+class AttrType
 {
     /**
      * @var integer
@@ -20,16 +20,7 @@ class Template
      * @ORM\GeneratedValue(strategy="AUTO")
      */
     private $id;
-    
-    /**
-     * @ORM\OneToMany (
-     * targetEntity="Itc\KidsBundle\Entity\Template\Attr",
-     * mappedBy="templ",
-     * cascade={"persist"}
-     * )
-     */
-    private $attributes;
-    
+
     /**
      * @var string
      *
@@ -38,12 +29,14 @@ class Template
     private $name;
 
     /**
-     * @var string
-     *
-     * @ORM\Column(name="url", type="string", length=100, nullable=true)
+     * @ORM\OneToMany (
+     * targetEntity="Itc\KidsBundle\Entity\Template\Attr",
+     * mappedBy="attrtype",
+     * cascade={"persist"}
+     * )
      */
-    private $url;
-
+    private $attributes;
+    
     /**
      * Get id
      *
@@ -58,7 +51,7 @@ class Template
      * Set name
      *
      * @param string $name
-     * @return Template
+     * @return AttrType
      */
     public function setName($name)
     {
@@ -76,29 +69,6 @@ class Template
     {
         return $this->name;
     }
-
-    /**
-     * Set url
-     *
-     * @param string $url
-     * @return Template
-     */
-    public function setUrl($url)
-    {
-        $this->url = $url;
-    
-        return $this;
-    }
-
-    /**
-     * Get url
-     *
-     * @return string 
-     */
-    public function getUrl()
-    {
-        return $this->url;
-    }
     /**
      * Constructor
      */
@@ -111,7 +81,7 @@ class Template
      * Add attributes
      *
      * @param \Itc\KidsBundle\Entity\Template\Attr $attributes
-     * @return Template
+     * @return AttrType
      */
     public function addAttribute(\Itc\KidsBundle\Entity\Template\Attr $attributes)
     {
@@ -138,9 +108,5 @@ class Template
     public function getAttributes()
     {
         return $this->attributes;
-    }
-    
-    function __toString(){
-        return is_null( $this->name ) ? "" : $this->name ;
     }
 }

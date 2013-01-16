@@ -27,6 +27,11 @@ class KidsProduct extends Product
     protected $productgroups;
 
 
+    /**
+     * @ORM\ManyToMany(targetEntity="Itc\KidsBundle\Entity\Template\AttrValue", inversedBy="products")
+     */    
+    protected $attrvalues;
+
     public function addProductGroups($productgroups) {
         $this->productgroups[] = $productgroups;
     }
@@ -45,8 +50,27 @@ class KidsProduct extends Product
         return $this->productgroups;
     }
 
+    public function addAttrvalues($attrvalues) {
+        $this->attrvalues[] = $attrvalues;
+    }
+    /**
+     * Remove menus
+     *
+     * @param Itc\KidsBundle\Entity\Template\AttrValue $attrvalues
+     */
+    
+    public function removeAttrvalues(\Itc\KidsBundle\Entity\Template\AttrValue $attrvalues)
+    {
+        $this->attrvalues->removeElement($attrvalues);
+    }
+    
+    public function getAttrvalues() {
+        return $this->attrvalues;
+    }
+
     function __construct() {
         parent::__construct();
-        $this->productgroups =new ArrayCollection();
+        $this->productgroups = new ArrayCollection();
+        $this->attrvalues = new ArrayCollection();
     }
 }

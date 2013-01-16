@@ -29,11 +29,10 @@ class Attr
     private $name;
 
     /**
-     * @var string
-     *
-     * @ORM\Column(name="type", type="string", length=100)
+     * @ORM\ManyToOne(targetEntity="Itc\KidsBundle\Entity\Template\AttrType", inversedBy="attributes")
+     * @ORM\JoinColumn(onDelete="CASCADE")
      */
-    private $type;
+    private $attrtype;
 
     /**
      * 
@@ -42,13 +41,23 @@ class Attr
      * @ORM\Column(name="templ_id", type="integer")
      */
     private $templ_id;
+    
     /**
-     * @ORM\ManyToOne(targetEntity="Itc\KidsBundle\Entity\Template\Template", inversedBy="id")
+     * @ORM\ManyToOne(targetEntity="Itc\KidsBundle\Entity\Template\Template", inversedBy="attributes")
      * @ORM\JoinColumn(name="templ_id", referencedColumnName="id",
      * onDelete="CASCADE")
      */
     protected $templ;
 
+    /**
+     * @ORM\OneToMany (
+     * targetEntity="Itc\KidsBundle\Entity\Template\AttrValue",
+     * mappedBy="attr",
+     * cascade={"persist"}
+     * )
+     */
+    private $attrvalues;
+    
     /**
      * Get id
      *
@@ -126,5 +135,72 @@ class Attr
     public function getTemplId()
     {
         return $this->templ_id;
+    }
+
+    /**
+     * Set templ
+     *
+     * @param \Itc\KidsBundle\Entity\Template\Template $templ
+     * @return Attr
+     */
+    public function setTempl(\Itc\KidsBundle\Entity\Template\Template $templ = null)
+    {
+        $this->templ = $templ;
+    
+        return $this;
+    }
+
+    /**
+     * Get templ
+     *
+     * @return \Itc\KidsBundle\Entity\Template\Template 
+     */
+    public function getTempl()
+    {
+        return $this->templ;
+    }
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->attrvalues = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+    
+    /**
+     * Add attrvalues
+     *
+     * @param \Itc\KidsBundle\Entity\Template\AttrValue $attrvalues
+     * @return Attr
+     */
+    public function addAttrvalue(\Itc\KidsBundle\Entity\Template\AttrValue $attrvalues)
+    {
+        $this->attrvalues[] = $attrvalues;
+    
+        return $this;
+    }
+
+    /**
+     * Remove attrvalues
+     *
+     * @param \Itc\KidsBundle\Entity\Template\AttrValue $attrvalues
+     */
+    public function removeAttrvalue(\Itc\KidsBundle\Entity\Template\AttrValue $attrvalues)
+    {
+        $this->attrvalues->removeElement($attrvalues);
+    }
+
+    /**
+     * Get attrvalues
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getAttrvalues()
+    {
+        return $this->attrvalues;
+    }
+    
+    function __toString(){
+        return is_null( $this->name ) ? "" : $this->name ;
     }
 }
