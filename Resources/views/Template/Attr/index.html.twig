@@ -1,31 +1,24 @@
 <h1>Template\Attr list</h1>
 
 <table class="records_list">
-    <thead>
-        <tr>
-            <th>Id</th>
-            <th>Name</th>
-            <th>Type</th>
-            <th>Actions</th>
-        </tr>
-    </thead>
-    <tbody>
+
     {% for entity in entities %}
-        <tr>
-            <td>{{ entity.id }}</td>
-            <td>{{ entity.name }}</td>
-            <td>{{ entity.attrtype }}</td>
-            <td>
+       
+                 <form action="{{ path('attributsvalue_create', { 'id':  entity.id }) }}" method="post" {{ form_enctype(edit_form[entity.id]) }}>
+                 {{ form_widget(edit_form[entity.id]) }}
+                    <p>
+                        <button type="submit">Create</button>
+                    </p>
+                </form>
                 <ul>
                     <li>
                         <a href="{{ path('attributs_edit', { 'templid': templid, 'id': entity.id }) }}">edit</a>
                     </li>
                 </ul>
-            </td>
-        </tr>
+          
+
     {% endfor %}
-    </tbody>
-</table>
+ 
 
 <ul>
     <li>
