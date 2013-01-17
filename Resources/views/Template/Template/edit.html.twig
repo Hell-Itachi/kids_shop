@@ -20,6 +20,6 @@
         </form>
     </li>
 </ul>
-<a href="{{ path('attributs_new', { 'templid': entity.id }) }}" target="_blank"> New attr </a>
+<a href="{{ path('attributs_new', { 'templid': entity.id }) }}"> New attr </a>
 {% set id=entity.id %}
 {% render 'ItcKidsBundle:Template/Attr:index' with { 'templid': id } %}

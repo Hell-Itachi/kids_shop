@@ -1,29 +1,36 @@
-<h1>Template\Attr list</h1>
+<h1>Список атрибутов</h1>
 
-<table class="records_list">
 
     {% for entity in entities %}
        
-                 <form action="{{ path('attributsvalue_create', { 'id':  entity.id }) }}" method="post" {{ form_enctype(edit_form[entity.id]) }}>
-                 {{ form_widget(edit_form[entity.id]) }}
-                    <p>
-                        <button type="submit">Create</button>
-                    </p>
+                 <form action="{{ path('attributs_update', {'templid': templid, 'id':  entity.id }) }}" method="post" {{ form_enctype(edit_form[entity.id]) }}>
+                    {{ form_widget(edit_form[entity.id].name) }}
+                            {% for attrvalue in edit_form[entity.id].attrvalues %}
+                                    {{ form_widget(attrvalue.value) }}
+                                    {{ form_widget(attrvalue.is_default) }}
+                             <a href="{{ path('attributsvalue_delete', { 'id': attrvalue.id.get('value') }) }}">
+                                Удалить
+                             </a>
+                         
+                            {% endfor %}
+                    {{ form_widget(edit_form[entity.id]._token) }}
+                         <input type="submit" value="Сохранить"/>
                 </form>
-                <ul>
-                    <li>
-                        <a href="{{ path('attributs_edit', { 'templid': templid, 'id': entity.id }) }}">edit</a>
-                    </li>
-                </ul>
-          
+                    <p>
+                         <a href="{{path('attributsvalue_new', { 'id':  entity.id }) }}">Добавить значение</a>
+                    </p>
+                <form action="{{ path('attributs_delete', { 'templid': templid, 'id': entity.id }) }}" method="post">
+                    <input type="submit" value="Удалить"/>
+                    {{ form_rest(delete_form[entity.id]) }}
+                </form> 
+{#
+                        <a href="{{ path('attributs_edit', { 'templid': templid, 'id': entity.id }) }}">Редактировать</a>
+ #}         
 
     {% endfor %}
- 
 
-<ul>
-    <li>
-        <a href="{{ path('attributs_new', { 'templid': templid }) }}">
-            Create a new entry
-        </a>
-    </li>
-</ul>
+  <p>
+    <a href="{{ path('attributs_new', { 'templid': templid }) }}">
+            Добавить атрибут
+    </a>
+  </p>

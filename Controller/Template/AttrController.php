@@ -33,11 +33,14 @@ class AttrController extends Controller
         foreach ($entities as $entity){
             $editForm[$entity->getId()] = $this->createForm(new \Itc\KidsBundle\Form\Template\AttrType(), $entity,
                      array("attr" => array("new" => true)))->createView();
+            $deleteForm[$entity->getId()] = $this->createDeleteForm($entity->getId())
+                            ->createView();;
             }  
         return array(
             'entities' => $entities,
             'templid'=> $templid, 
-            'edit_form'=>$editForm
+            'edit_form'=>$editForm,
+            'delete_form'=>$deleteForm
         );
     }
 
@@ -86,9 +89,8 @@ class AttrController extends Controller
             $em->persist($entity);
             $em->flush();
 
-            return $this->redirect($this->generateUrl('attributs_edit', array(
-                        'templid' => $templid,
-                        'id' => $entity->getId()
+            return $this->redirect($this->generateUrl('template_edit', array(
+                        'id' => $templid
                     )));
         }
 
@@ -142,18 +144,17 @@ class AttrController extends Controller
         if (!$entity) {
             throw $this->createNotFoundException('Unable to find Template\Attr entity.');
         }
-
+        
         $deleteForm = $this->createDeleteForm($id);
-        $editForm = $this->createForm(new AttrType(), $entity);
+        $editForm = $this->createForm(new AttrType(), $entity,
+                     array("attr" => array("new" => true)));
         $editForm->bind($request);
 
         if ($editForm->isValid()) {
             $em->persist($entity);
             $em->flush();
-
-            return $this->redirect($this->generateUrl('attributs_edit', array(
-                    'templid' => $templid,
-                    'id'      => $id
+            return $this->redirect($this->generateUrl('template_edit', array(
+                    'id' => $templid
                 )));
         }
 
@@ -188,7 +189,7 @@ class AttrController extends Controller
             $em->flush();
         }
 
-        return $this->redirect($this->generateUrl('attributs', array('templid' => $templid)));
+        return $this->redirect($this->generateUrl('template_edit', array('id' => $templid)));
     }
 
     private function createDeleteForm($id)
