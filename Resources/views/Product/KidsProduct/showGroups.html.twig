@@ -1,0 +1,37 @@
+{% block prod_groups %}
+<script src="{{ asset ( 'bundles/itckids/js/content.js' ) }}" ></script>
+<link rel="stylesheet" href="{{ asset ( 'bundles/itckids/css/kidsCss.css' ) }}" />
+
+
+<table class="treeTableGroup">
+    {% for groups in form.productGroups %}
+        {% if child[groups.get('value')] == null %}
+        <tr id="node-{{groups.get('value')}}">
+            <td>{{form_row(groups)}}</td>
+        </tr>
+            {{ _self.items(groups.get('value'),child,form.productGroups) }}
+        {% endif %} 
+    {% endfor %}
+</table>
+{% endblock %}
+
+{% macro items(item,child,form)%} 
+    {% set foo = 0 %}
+    {% for ch in child %}
+        {% if ch == item %}
+            {% set foo = 1 %}
+        {% endif %} 
+    {% endfor %}
+    
+    {% if foo == 1 %}
+            {% for groups in form %}
+                {% if child[groups.get('value')] == item %}
+                    <tr id="node-{{groups.get('value')}}" class="child-of-node-{{item}}">  
+                        <td>{{form_row(groups)}}</td>
+                    </tr>
+                        {{ _self.items(groups.get('value'),child,form) }}
+                {% endif %}     
+            {% endfor %}
+        
+    {% endif %} 
+{% endmacro %}

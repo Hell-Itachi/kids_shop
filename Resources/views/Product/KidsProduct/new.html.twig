@@ -1,0 +1,9 @@
+{% extends 'ItcAdminBundle::Product/Product/new.html.twig' %}
+{% block tabs %}
+    {% include 'ItcAdminBundle:Product:tabs.html.twig' %}
+    <div class = 'menu_sys_lang_tab ' rel="groups">groups</div>
+{% endblock %}
+{% block content %}
+    <div>{% include 'ItcKidsBundle::Product/KidsProduct/showGroups.html.twig' %}</div>
+    <div>{% include 'ItcAdminBundle:Product:defTempl.html.twig' %}</div>
+{% endblock %}

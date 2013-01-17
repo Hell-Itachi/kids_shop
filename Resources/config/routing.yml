@@ -4,4 +4,4 @@ kids:
     type:     annotation
     defaults: {_locale: %locale% }
     requirements:
-      _locale : \w{2}        
+      _locale : \w{2} 

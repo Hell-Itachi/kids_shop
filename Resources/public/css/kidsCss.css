@@ -1,0 +1,14 @@
+table.treeTableGroup {
+    border: 1px solid #888888;
+    border-collapse: collapse;
+    line-height: 1;
+    margin: 1em auto;
+}
+table.treeTableGroup caption {
+    font-size: 0.9em;
+    font-weight: bold;
+}
+table.treeTableGroup tbody tr td {
+    cursor: default;
+    padding: 0.3em 1.5em;
+}
