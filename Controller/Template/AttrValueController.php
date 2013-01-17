@@ -75,8 +75,8 @@ class AttrValueController extends Controller
             $em = $this->getDoctrine()->getManager();
             $em->persist($entity);
             $em->flush();
-
-            return $this->redirect($this->generateUrl('attributsvalue_edit', array('id' => $entity->getId())));
+            $templid=$entity->getAttr()->getTemplId();
+            return $this->redirect($this->generateUrl('template_edit', array('id' => $templid)));
         }
 
         return array(
@@ -112,6 +112,32 @@ class AttrValueController extends Controller
     }
 
     /**
+     * Displays a form to edit an existing Template\AttrValue entity.
+     *
+     * @Route("/{id}/inedit", name="attributsvalue_inedit")
+     * @Template("ItcKidsBundle:Template\AttrValue:edit.html.twig")
+     */
+    public function ineditAction($id)
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        $entity = $em->getRepository('ItcKidsBundle:Template\AttrValue')->find($id);
+
+        if (!$entity) {
+            throw $this->createNotFoundException('Unable to find Template\AttrValue entity.');
+        }
+
+        $editForm = $this->createForm(new AttrValueType(), $entity);
+        $deleteForm = $this->createDeleteForm($id);
+
+        return array(
+            'entity'      => $entity,
+            'edit_form'   => $editForm->createView(),
+            'delete_form' => $deleteForm->createView(),
+        );
+    }
+
+    /**
      * Edits an existing Template\AttrValue entity.
      *
      * @Route("/{id}/update", name="attributsvalue_update")
@@ -123,11 +149,10 @@ class AttrValueController extends Controller
         $em = $this->getDoctrine()->getManager();
 
         $entity = $em->getRepository('ItcKidsBundle:Template\AttrValue')->find($id);
-
+        $templid=$entity->getAttr()->getTemplId();
         if (!$entity) {
             throw $this->createNotFoundException('Unable to find Template\AttrValue entity.');
         }
-
         $deleteForm = $this->createDeleteForm($id);
         $editForm = $this->createForm(new AttrValueType(), $entity);
         $editForm->bind($request);
@@ -136,7 +161,7 @@ class AttrValueController extends Controller
             $em->persist($entity);
             $em->flush();
 
-            return $this->redirect($this->generateUrl('attributsvalue_edit', array('id' => $id)));
+            return $this->redirect($this->generateUrl('template_edit', array('id' => $templid)));
         }
 
         return array(
@@ -150,26 +175,19 @@ class AttrValueController extends Controller
      * Deletes a Template\AttrValue entity.
      *
      * @Route("/{id}/delete", name="attributsvalue_delete")
-     * @Method("POST")
      */
-    public function deleteAction(Request $request, $id)
+    public function deleteAction($id)
     {
-        $form = $this->createDeleteForm($id);
-        $form->bind($request);
-
-        if ($form->isValid()) {
+       
             $em = $this->getDoctrine()->getManager();
             $entity = $em->getRepository('ItcKidsBundle:Template\AttrValue')->find($id);
-
-            if (!$entity) {
-                throw $this->createNotFoundException('Unable to find Template\AttrValue entity.');
-            }
-
+            $templid=$entity->getAttr()->getTemplId();
+         
             $em->remove($entity);
             $em->flush();
-        }
+        
 
-        return $this->redirect($this->generateUrl('attributsvalue'));
+        return $this->redirect($this->generateUrl('template_edit', array('id'=>$templid)));
     }
 
     private function createDeleteForm($id)

@@ -11,8 +11,9 @@ class AttrValueType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('value')
-            ->add('is_default')
+            ->add('id', 'hidden',array('required'=>NULL))
+            ->add('value', NULL, array('label'=> ' '))
+            ->add('is_default', NULL, array('required'=>NULL))
         ;
     }
 
