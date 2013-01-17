@@ -22,6 +22,10 @@ class KidsProductType extends ProductType {
                         'multiple' => 'checkboxes',
                         'expanded' => 'checkboxes'))
                 ->add('productGroup', null, array('required'=>NULL,"class"=> 'ItcKidsBundle:Product\KidsProductGroup'))
+                 
+                /*->add('relations', null, array('required'=>NULL,"class"=> 'ItcAdminBundle:Product\Product','property' => 'title','multiple' => 'checkboxes',
+                        'expanded' => 'checkboxes'))*/
+
             ;
     }
 }
