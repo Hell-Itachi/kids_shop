@@ -5,6 +5,7 @@ namespace Itc\KidsBundle\Form\Product;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Response;
 use Itc\AdminBundle\Form\Product\ProductType;
+use Itc\AdminBundle\Entity\Product\Product;
 
 /**
  * Description of KidsProductType
@@ -22,10 +23,7 @@ class KidsProductType extends ProductType {
                         'multiple' => 'checkboxes',
                         'expanded' => 'checkboxes'))
                 ->add('productGroup', null, array('required'=>NULL,"class"=> 'ItcKidsBundle:Product\KidsProductGroup'))
-                 
-                /*->add('relations', null, array('required'=>NULL,"class"=> 'ItcAdminBundle:Product\Product','property' => 'title','multiple' => 'checkboxes',
-                        'expanded' => 'checkboxes'))*/
-
+             
             ;
     }
 }
