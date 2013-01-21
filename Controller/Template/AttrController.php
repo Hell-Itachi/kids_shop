@@ -35,7 +35,7 @@ class AttrController extends Controller
             $editForm[$entity->getId()] = $this->createForm(new \Itc\KidsBundle\Form\Template\AttrType(), $entity,
                      array("attr" => array("new" => true)))->createView();
             $deleteForm[$entity->getId()] = $this->createDeleteForm($entity->getId())
-                            ->createView();;
+                            ->createView();
             }  
         return array(
             'entities' => $entities,
