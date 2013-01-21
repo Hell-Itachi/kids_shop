@@ -1,5 +1,5 @@
 table.treeTableGroup {
-    border: 1px solid #888888;
+    /*border: 1px solid #888888;*/
     border-collapse: collapse;
     line-height: 1;
     margin: 1em auto;
@@ -10,5 +10,8 @@ table.treeTableGroup caption {
 }
 table.treeTableGroup tbody tr td {
     cursor: default;
-    padding: 0.3em 1.5em;
+    padding: 0.4em 0 0 2em;
+}
+table.treeTableGroup{
+    border-style: none !important;
 }
