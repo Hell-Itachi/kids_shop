@@ -28,10 +28,14 @@ class KidsProduct extends Product
 
 
     /**
-     * @ORM\ManyToMany(targetEntity="Itc\KidsBundle\Entity\Template\AttrValue", inversedBy="products")
-     */    
-    protected $attrvalues;
-
+     * @ORM\OneToMany (
+     * targetEntity="Itc\KidsBundle\Entity\Template\KidsProductAttrvalue",
+     * mappedBy="product",
+     * cascade={"persist"}
+     * )
+     */
+    private $productattrvalues;
+    
     public function addProductGroups($productgroups) {
         $this->productgroups[] = $productgroups;
     }

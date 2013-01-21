@@ -42,6 +42,50 @@ class KidsProductController extends ProductController
         }
         return $parent;
     }
+    
+    /**
+     * @Template()
+     */
+    public function showTemplateAction($id)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $entities = $em->getRepository('Itc\KidsBundle\Entity\Template\Template')->findAll();
+        foreach ($entities as $entity) {
+           $array[$entity->getId()]= $entity->getName();
+        }
+        //print_r($array);
+        $ListTemplate = $this->createForm(new \Itc\KidsBundle\Form\Template\TemplateListType(), NULL, 
+               array('data' => $array));
+        return array(
+            'list_template' => $ListTemplate->createView(),
+            'id' => $id
+        );
+    }
 
+    /**
+     *
+     * @Route("/{id}/edittemplate", name="product_edit_template")
+     * @Method("POST")
+     * @Template()
+     */
+    public function edittemplateAction(Request $request, $id)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $entities = $em->getRepository('Itc\KidsBundle\Entity\Template\Template')->findAll();
+        foreach ($entities as $entity) {
+           $array[$entity->getId()]= $entity->getName();
+        }
+        $form = $this->createForm(new \Itc\KidsBundle\Form\Template\TemplateListType(), NULL, 
+               array('data' => $array));
+        $entity = $em->getRepository('Itc\KidsBundle\Entity\Product\KidsProduct')->find($id);
+        
+        $form->bindRequest($request);
+        $data = $form->getValues();
+        print_r($data);
+        return array(
+            'list_template' => $ListTemplate->createView(),
+            'id' => $id
+        );
+    }
 }
 

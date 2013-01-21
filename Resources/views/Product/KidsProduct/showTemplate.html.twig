@@ -1,0 +1,11 @@
+<div class="load_template">
+<form action="{{ path('product_edit_template', { 'id': id}) }}" method="post" {{ form_enctype(list_template) }}>
+    {{ form_widget(list_template) }}
+        <input type="hidden" name="_route" value="product_edit_template"/>
+    <p>
+        <input type="button" name="Применить" class="save_template"/>
+    </p>
+</form>
+<br />
+<div class="load_template_data" ></div>
+</div>

@@ -46,11 +46,14 @@ class AttrValue
     protected $attr;
 
     /**
-     * @ORM\ManyToMany(targetEntity="Itc\KidsBundle\Entity\Product\KidsProduct", mappedBy="attrvalues")
-     *  
+     * @ORM\OneToMany (
+     * targetEntity="Itc\KidsBundle\Entity\Template\KidsProductAttrvalue",
+     * mappedBy="attrvalue",
+     * cascade={"persist"}
+     * )
      */
-    protected $products;
-
+    private $productattrvalues;
+    
 
     /**
      * Get id
