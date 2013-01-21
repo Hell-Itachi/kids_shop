@@ -37,7 +37,12 @@ class AttrValue
      * @ORM\Column(name="is_default", type="boolean")
      */
     private $is_default;
-    
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="kod", type="integer" , nullable=true)
+     */
+    private $kod;
     /**
      * @ORM\ManyToOne(targetEntity="Itc\KidsBundle\Entity\Template\Attr", inversedBy="attrvalues")
      * @ORM\JoinColumn(name="attr_id", referencedColumnName="id",
@@ -54,8 +59,15 @@ class AttrValue
      */
     private $productattrvalues;
     
+    public function getKod() {
+        return $this->kod;
+    }
 
-    /**
+    public function setKod($kod) {
+        $this->kod = $kod;
+    }
+
+        /**
      * Get id
      *
      * @return integer 

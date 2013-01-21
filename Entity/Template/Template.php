@@ -40,9 +40,9 @@ class Template
     /**
      * @var string
      *
-     * @ORM\Column(name="url", type="string", length=100, nullable=true)
+     * @ORM\Column(name="content", type="string", length=100, nullable=true)
      */
-    private $url;
+    private $content;
 
     /**
      * Get id
@@ -78,26 +78,26 @@ class Template
     }
 
     /**
-     * Set url
+     * Set content
      *
-     * @param string $url
+     * @param string $content
      * @return Template
      */
-    public function setUrl($url)
+    public function setContent($content)
     {
-        $this->url = $url;
+        $this->content = $content;
     
         return $this;
     }
 
     /**
-     * Get url
+     * Get content
      *
      * @return string 
      */
-    public function getUrl()
+    public function getContent()
     {
-        return $this->url;
+        return $this->content;
     }
     /**
      * Constructor

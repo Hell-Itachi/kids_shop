@@ -57,8 +57,21 @@ class Attr
      * )
      */
     private $attrvalues;
-    
     /**
+     * @var integer
+     *
+     * @ORM\Column(name="kod", type="integer" , nullable=true)
+     */
+    private $kod;
+    public function getKod() {
+        return $this->kod;
+    }
+
+    public function setKod($kod) {
+        $this->kod = $kod;
+    }
+
+        /**
      * Get id
      *
      * @return integer 

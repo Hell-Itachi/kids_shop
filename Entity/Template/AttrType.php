@@ -109,4 +109,7 @@ class AttrType
     {
         return $this->attributes;
     }
+    function __toString(){
+        return is_null( $this->name ) ? "" : $this->name ;
+    }
 }

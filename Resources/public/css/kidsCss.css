@@ -12,3 +12,15 @@ table.treeTableGroup tbody tr td {
     cursor: default;
     padding: 0.3em 1.5em;
 }
+.input-append input[type="text"]{
+    height: 30px;
+    line-height: 30px;
+}
+.template_save input[type="text"]{
+    height: 30px;
+    line-height: 30px;
+}
+.form_attr input[type="text"]{
+    height: 30px;
+    line-height: 30px;
+}

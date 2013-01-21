@@ -1,36 +1,97 @@
-<h1>Список атрибутов</h1>
-
-
-    {% for entity in entities %}
-       
-                 <form action="{{ path('attributs_update', {'templid': templid, 'id':  entity.id }) }}" method="post" {{ form_enctype(edit_form[entity.id]) }}>
-                    {{ form_widget(edit_form[entity.id].name) }}
+<table class="table table-hover table-condensed">
+    <tbody>
+          <tr>
+            <th style="width:380px; text-align: center">Атрибут</th>
+            <th style="width:320px;">Тип</th>
+            <th>Значения</th>
+          </tr>
+    </tbody>
+</table>
+ {% for entity in entities %}
+                 <form action="{{ path('attributs_update', {'templid': templid, 'id':  entity.id }) }}" method="post" {{ form_enctype(edit_form[entity.id]) }} class="attr_save_form_{{entity.id}}">
+                  <table class="table table-hover table-condensed">
+                    <tbody>
+                        <tr>
+                            <td>
+                                    <div class="input-append">
+                                        {{ form_widget(edit_form[entity.id].name,{ 'attr' : { 'class' : 'input-xlarge'} })  }}
+                                         <div class="btn-group">
+                                        <button data-toggle="dropdown" class="btn dropdown-toggle">
+                                        Действие
+                                        <span class="caret"></span>
+                                        </button>
+                                        <ul class="dropdown-menu">
+                                        <li><a href="#attr_save{{entity.id}}"  onclick="$('.attr_save{{entity.id}}').trigger('click')"><i class="icon-edit"></i>Сохранить</a></li>
+                                        <li><a href="#" onclick="$('.delete_attr_{{entity.id}}').trigger('click')"><i class="icon-remove"></i>Удалить</a></li>
+                                        <li><a href=""><i class="icon-arrow-up"></i>Вверх</a></li>
+                                        <li><a href=""><i class="icon-arrow-down"></i>Вниз</a></li>
+                                            <li class="divider"></li>
+                                            <li><a href="">По умолчанию</a></li><a href=""></a></ul><a href="">
+                                        </a></div>
+                                    </div>
+                             </td>  
+                             <td>
+                                    {{ form_widget(edit_form[entity.id].attrtype)}}
+                             </td> 
+                             <td>
                             {% for attrvalue in edit_form[entity.id].attrvalues %}
-                                    {{ form_widget(attrvalue.value) }}
-                                    {{ form_widget(attrvalue.is_default) }}
-                             <a href="{{ path('attributsvalue_delete', { 'id': attrvalue.id.get('value') }) }}">
-                                Удалить
-                             </a>
-                         
+                                     {% set buttons %}
+                                        <div class="btn-group">
+                                        <button data-toggle="dropdown" class="btn dropdown-toggle">
+                                        Действие
+                                        <span class="caret"></span>
+                                        </button>
+                                        <ul class="dropdown-menu">
+                                        <li><a href="{{ path('attributsvalue_delete', { 'id': attrvalue.id.get('value') }) }}"><i class="icon-remove"></i>Удалить</a></li>
+                                        <li><a href=""><i class="icon-arrow-up"></i>Вверх</a></li>
+                                        <li><a href=""><i class="icon-arrow-down"></i>Вниз</a></li>
+                                            <li class="divider"></li>
+                                            <li><a href="#">По умолчанию 
+                                                 {{ form_widget(attrvalue.is_default) }}</a></li><a href="">
+                                        </a></ul><a href="">
+                                        </a></div>
+                                     {% endset %}
+                                     <div class="input-append">
+                                    {{ form_widget(attrvalue.value) }} 
+                                        {% if edit_form[entity.id].attrtype.get('value')==1%}
+                                        {% else %}     
+                                             {{ buttons }}
+                                        {% endif %}
+                                      </div>
                             {% endfor %}
-                    {{ form_widget(edit_form[entity.id]._token) }}
-                         <input type="submit" value="Сохранить"/>
-                </form>
+                    {% set addvalue %}
                     <p>
-                         <a href="{{path('attributsvalue_new', { 'id':  entity.id }) }}">Добавить значение</a>
+                         <a href="{{path('attributsvalue_new', { 'id':  entity.id }) }}" class="btn btn-success btn-mini pull-right">
+                             <i class="icon-plus-sign"></i>
+                             Добавить значение
+                         </a>
                     </p>
-                <form action="{{ path('attributs_delete', { 'templid': templid, 'id': entity.id }) }}" method="post">
-                    <input type="submit" value="Удалить"/>
+                    {% endset %}
+                    {% if edit_form[entity.id].attrtype.get('value')==1 and edit_form[entity.id].attrvalues|length != 0%}
+                                        {% else %}     
+                                             {{ addvalue }}
+                    {% endif %}
+                             </td>
+                    {{ form_widget(edit_form[entity.id]._token) }}
+                         <input type="submit" value="Сохранить" style="display:none" class="attr_save{{entity.id}}"/>
+                        
+                   
+                    </tbody>
+                  </table>
+                </form>
+               <form action="{{ path('attributs_delete', { 'templid': templid, 'id': entity.id }) }}" method="post" style="display:none">
+                    <input type="submit" value="Удалить" class="delete_attr_{{entity.id}}"/>
                     {{ form_rest(delete_form[entity.id]) }}
-                </form> 
-{#
-                        <a href="{{ path('attributs_edit', { 'templid': templid, 'id': entity.id }) }}">Редактировать</a>
- #}         
-
+                </form>
+            
     {% endfor %}
 
   <p>
-    <a href="{{ path('attributs_new', { 'templid': templid }) }}">
-            Добавить атрибут
-    </a>
+      <div class="row-fluid">
+          <a data-toggle="modal" href="#AddAttr" class="btn btn-success"><i class="icon-plus"></i> Добавить атрибут</a>
+                <div aria-hidden="true" aria-labelledby="myModalLabel" role="dialog" tabindex="-1" class="modal hide fade" id="AddAttr" style="display: none;">
+                    {% render 'ItcKidsBundle:Template/Attr:new' with { 'templid': templid } %}
+                </div>
+				
+	</div>
   </p>
