@@ -12,7 +12,7 @@ class TemplateType extends AbstractType
     {
         $builder
             ->add('name')
-            ->add('url')
+            ->add('content')
         ;
     }
 

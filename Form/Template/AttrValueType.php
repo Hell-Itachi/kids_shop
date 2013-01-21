@@ -10,6 +10,8 @@ class AttrValueType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
+            
+        
         $builder
             ->add('id', 'hidden',array('required'=>NULL))
             ->add('value', NULL, array('label'=> ' '))
@@ -26,6 +28,10 @@ class AttrValueType extends AbstractType
 
     public function getName()
     {
-        return 'itc_kidsbundle_template_attrvaluetype';
+       
+            $attr_id='itc_kidsbundle_template_attrvaluetype';
+    
+        
+        return $attr_id;
     }
 }

@@ -8,13 +8,17 @@ use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
 class AttrType extends AbstractType
 {
+     public function __construct($option){
+        $this->option=$option;
+    }
     
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('name');
+            ->add('name')
+            ->add('attrtype');
                 if($options['attr']['new']){
-           $builder ->add('attrvalues', 'collection', array('type' => new AttrValueType()));}
+           $builder ->add('attrvalues', 'collection', array('type' => new AttrValueType($options['attr']['class'])));}
         
     }
 
@@ -27,6 +31,13 @@ class AttrType extends AbstractType
 
     public function getName()
     {
-        return 'itc_kidsbundle_template_attrtype';
+          if($this->option=='select')
+        {
+            $attr_id="appendedDropdownButton";
+        }
+        else{
+            $attr_id='itc_kidsbundle_template_attrtype';
+        }
+        return $attr_id;
     }
 }

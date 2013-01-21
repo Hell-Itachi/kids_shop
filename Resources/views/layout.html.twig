@@ -5,61 +5,41 @@
     {% endblock %}
     
         {% block javascript %}
-            <script src="{{ asset ( 'bundles/itckids/js/bootstrap.js' ) }}" ></script>
             <script src="{{ asset ( 'bundles/itcadmin/js/plugins/jquery-1.8.2.min.js' ) }}" ></script>
             <script src="{{ asset ( 'bundles/itcadmin/js/plugins/jquery-1.8.2.js' ) }}" ></script>
-            <script src="{{ asset ( 'bundles/itcadmin/js/plugins/jquery-ui-1.9.1.custom.js' ) }}" ></script>
-            <script src="{{ asset ( 'bundles/itcadmin/js/plugins/jquery-ui-1.9.1.custom.min.js' ) }}" ></script>
             <script src="{{ asset ( 'bundles/itcadmin/js/plugins/jquery.fancybox.js' ) }}" ></script>
             <script src="{{ asset ( 'bundles/itcadmin/js/plugins/jquery.form.js' ) }}" ></script>
             <script src="{{ asset ( 'bundles/itcadmin/js/plugins/jquery.Jcrop.min.js' ) }}" ></script>
             <script src="{{ asset ( 'bundles/itcadmin/js/plugins/select2.min.js' ) }}" ></script>
-            <script src="{{ asset ( 'bundles/itcadmin/js/content.js' ) }}" ></script>
+             <script src="{{ asset ( 'bundles/itckids/js/bootstrap.js' ) }}" ></script>
             <script type="text/javascript" src="{{ asset('bundles/fosjsrouting/js/router.js') }}"></script>
             <script type="text/javascript" src="{{ path('fos_js_routing_js', {"callback": "fos.Router.setData"}) }}"></script>
         {% endblock %}
 
         {% block css %}
             
+            <link rel="stylesheet" href="{{ asset ( 'bundles/itckids/css/kidsCss.css' ) }}" />
             <link rel="stylesheet" href="{{ asset ( 'bundles/itckids/css/bootstrap.css' ) }}" />
-            <link rel="stylesheet" href="{{ asset ( 'bundles/itcadmin/css/plugins/jquery-ui-1.9.1.custom.min.css' ) }}"/>
-            <link rel="stylesheet" href="{{ asset ( 'bundles/itcadmin/css/plugins/jquery-ui-1.9.1.custom.css' ) }}"/>
-            <link rel="stylesheet" href="{{ asset ( 'bundles/itcadmin/css/plugins/fancy.css' ) }}"/>
-            <link rel="stylesheet" href="{{ asset ( 'bundles/itcadmin/css/select2.css' ) }}"/>
-            <link rel="stylesheet" href="{{ asset ( 'bundles/itcadmin/css/morestyles.css' ) }}" />
-            <link rel="stylesheet" href="{{ asset ( 'bundles/itcadmin/css/plugins/jquery.Jcrop.css' ) }}" />
-            <link rel="stylesheet" href="{{ asset ( 'bundles/itcadmin/css/style.css' ) }}" />
+            <link rel="stylesheet" href="{{ asset ( 'bundles/itckids/css/docs.css' ) }}" />
+            <link rel="stylesheet" href="{{ asset ( 'bundles/itckids/css/bootstrap-responsive.css' ) }}" />
+
         {% endblock %}
-            
+              {#  <style type="text/css">
+                body {
+                    padding-top: 60px;
+                    padding-bottom: 40px;
+                }
+                .sidebar-nav {
+                    padding: 9px 0;
+                } </style>#}
+               
 </head>
 
 <body>
     
-    {% block menu %}
-        {% render "ItcAdminBundle:Admin:menu" %}
-    {% endblock %}
-
-    <br class = 'clr' />
-    <div class="row-fluid">
-
-        {% block fos_user_content %}
-        
-            {% block header%}
-            {% endblock %}
-            <div class = 'span12'>
-                {% block body %}
-                    
-                {% endblock %}
-            </div>
-        {% endblock %}
-
-    </div>
-    
-    <div class = 'footer'>
-        {% block footer %}
+        {% block body %}
 
         {% endblock %}
-    </div>
 </body>
 
 </html>

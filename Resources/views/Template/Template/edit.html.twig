@@ -1,25 +1,107 @@
-<h1>Template\Template edit</h1>
+{% extends 'ItcKidsBundle::layout.html.twig' %}
+{% block body %}
+<div class="container-fluid">
+    <div class="row-fluid">
+        <div class="span3">
+            <div class="well sidebar-nav">
+                <table class="table table-hover table-condensed">
+                    <tbody>
+                        {% for temp in entities %}
+                            {% if temp.id==entity.id %}
+                                {% set class='info' %}
+                                {% else %}
+                                {% set class='' %}
+                            {% endif %}
+                        <tr class="{{ class }}">
+                            <td>
+                                <div class="row-fluid">
+                                    <div class="span8">
+                                        <a href="{{ path('template_edit', { 'id': temp.id })  }}">Шаблон № {{ loop.index }} {{ temp.name }}</a>
+                                    </div>
+                                    <div class="span4">
+                                        <div class="btn-group">
+                                            <a class="btn new_window" target="_blank" href="{{ path('template_edit', { 'id': temp.id })  }}">
+                                                <i class="icon-edit"></i>
+                                            </a>
+                                            <a class="btn btn-danger" href="#myModal{{ temp.id }}" data-toggle="modal">
+                                                <i class="icon-remove"></i>
+                                            </a>
+                                                <div id="myModal{{ temp.id }}" class="modal hide fade" aria-hidden="true" aria-labelledby="myModalLabel" role="dialog" tabindex="-1" style="display: none;">
+                                                    <div class="modal-header">
+                                                        <button class="close" aria-hidden="true" data-dismiss="modal" type="button">×</button>
+                                                        <h3 id="myModalLabel">Не удаляйте шаблон!</h3>
+                                                    </div>
+                                                <div class="modal-body">
+                                                    <p>Удаление шаблона!!! вусыс…</p>
+                                                </div>
+                                                <div class="modal-footer">
+                                                <button class="btn" aria-hidden="true" data-dismiss="modal">Закрыть</button>
+                                                <form action="{{ path('template_delete', { 'id': temp.id }) }}" method="post">
+                                                    {{ form_widget(delete_template_form[temp.id]) }}
+                                                    <button type="submit" class="btn btn-primary">Удалить</button>
+                                                </form>
+                                                </div>
+                                                </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+  <div class="span9">
+   <h3>Редактирование шаблона</h3>
+      <div class="bs-docs-example">
+<table class="table table-hover table-condensed">
+    <tbody>
+          <tr>
+            <td>
+                <h3>Шаблон</h3>
+                <form action="{{ path('template_update', { 'id': entity.id }) }}" method="post" {{ form_enctype(edit_form) }} class="template_save">
+                    <table class="table table-hover table-condensed">
+                        <tbody>
+                            <tr>
+                                <td>Название: {{ form_widget(edit_form.name) }}</td>
+                                <td><div class="input-append">{{ form_widget(edit_form.content) }}
+                                        <div class="btn-group">
+                                        <button data-toggle="dropdown" class="btn dropdown-toggle">
+                                        Действие
+                                        <span class="caret"></span>
+                                        </button>
+                                        <ul class="dropdown-menu">
+                                        <li><a href="#"  onclick="$('.template_save').submit()"><i class="icon-edit"></i>Сохранить</a></li>
+                                        <li><a href="#" onclick="$('.template_delete').trigger('click')"><i class="icon-remove"></i>Удалить</a></li>
+                                        </ul><a href="">
+                                        </a></div>
+                                     </div></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                        {{ form_widget(edit_form._token) }}
+                                        
+                   
+                    
+                </form>   
+                <form action="{{ path('template_delete', { 'id': entity.id }) }}" method="post" style="display:none">
+                    {{ form_widget(delete_form) }}
+                    <button type="submit" class="template_delete">Delete</button>
+                </form>
+            </td>
+          </tr>
+    </tbody>
+</table>
+        {% set id=entity.id %}
+        {% render 'ItcKidsBundle:Template/Attr:index' with { 'templid': id } %}
 
-<form action="{{ path('template_update', { 'id': entity.id }) }}" method="post" {{ form_enctype(edit_form) }}>
-    {{ form_widget(edit_form) }}
-    <p>
-        <button type="submit">Edit</button>
-    </p>
-</form>
+   </div>
+</div>
+    </div>
+</div>
 
-<ul class="record_actions">
-    <li>
-        <a href="{{ path('template') }}">
-            Back to the list
-        </a>
-    </li>
-    <li>
-        <form action="{{ path('template_delete', { 'id': entity.id }) }}" method="post">
-            {{ form_widget(delete_form) }}
-            <button type="submit">Delete</button>
-        </form>
-    </li>
-</ul>
-<a href="{{ path('attributs_new', { 'templid': entity.id }) }}"> New attr </a>
-{% set id=entity.id %}
-{% render 'ItcKidsBundle:Template/Attr:index' with { 'templid': id } %}
+
+
+
+{% endblock %}

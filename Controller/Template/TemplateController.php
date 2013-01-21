@@ -88,18 +88,23 @@ class TemplateController extends Controller
         $em = $this->getDoctrine()->getManager();
 
         $entity = $em->getRepository('ItcKidsBundle:Template\Template')->find($id);
-
+        $entities = $em->getRepository('ItcKidsBundle:Template\Template')->findAll();
         if (!$entity) {
             throw $this->createNotFoundException('Unable to find Template\Template entity.');
         }
 
         $editForm = $this->createForm(new TemplateType(), $entity);
         $deleteForm = $this->createDeleteForm($id);
-
+        foreach ($entities as $form) {
+            $deleteTempForm[$form->getId()] = $this->createDeleteForm($form->getId())
+                            ->createView();
+        }
         return array(
             'entity'      => $entity,
+            'entities'    => $entities,
             'edit_form'   => $editForm->createView(),
             'delete_form' => $deleteForm->createView(),
+            'delete_template_form' =>$deleteTempForm       
         );
     }
 
@@ -130,7 +135,7 @@ class TemplateController extends Controller
 
             return $this->redirect($this->generateUrl('template_edit', array('id' => $id)));
         }
-
+        
         return array(
             'entity'      => $entity,
             'edit_form'   => $editForm->createView(),

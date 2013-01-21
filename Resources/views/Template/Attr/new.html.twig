@@ -1,16 +1,21 @@
-<h1>Template\Attr creation</h1>
-
-<form action="{{ path('attributs_create', { 'templid': templid }) }}" method="post" {{ form_enctype(form) }}>
+{#<form action="{{ path('attributs_create', { 'templid': templid }) }}" method="post" {{ form_enctype(form) }}>
     {{ form_widget(form) }}
     <p>
         <button type="submit">Create</button>
     </p>
-</form>
-
-<ul class="record_actions">
-    <li>
-        <a href="{{ path('attributs', { 'templid': templid }) }}">
-            Back to the list
-        </a>
-    </li>
-</ul>
+</form>#}
+<div class="modal-header">
+                <button aria-hidden="true" data-dismiss="modal" class="close" type="button">×</button>
+                <h3 id="myModalLabel">Добавление атрибута</h3>
+                </div>
+                <div class="modal-body">
+                <form action="{{ path('attributs_create', { 'templid': templid }) }}" method="post" {{ form_enctype(form) }} class="form_attr">
+                <p>
+                    {{ form_widget(form) }}
+                </p>
+                </form>
+                </div>
+                <div class="modal-footer">
+                <button aria-hidden="true" data-dismiss="modal" class="btn">Close</button>
+                <button class="btn btn-primary" onclick="$('.form_attr').submit()">Сохранить</button>
+                </div>
