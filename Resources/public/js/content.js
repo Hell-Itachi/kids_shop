@@ -1,5 +1,5 @@
 $( document ).ready(function() {
-   // $(".treeTableGroup").treeTable();
+    $(".treeTableGroup").treeTable();
     
     
     $(".change_position_object_template").live('click', function(){
