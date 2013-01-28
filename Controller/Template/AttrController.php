@@ -37,15 +37,74 @@ class AttrController extends Controller
                      array("attr" => array("new" => true, "class"=>$entity->getAttrtype()->getName())))->createView();
             $deleteForm[$entity->getId()] = $this->createDeleteForm($entity->getId())
                             ->createView();
+            $changeKodForm[$entity->getId()] = 
+                    $this->createChangeKodForm($entity->getKod())
+                            ->createView();
             }  
         return array(
             'entities' => $entities,
             'templid'=> $templid, 
             'edit_form'=>$editForm,
-            'delete_form'=>$deleteForm
+            'delete_form'=>$deleteForm,
+            'kod_form' =>$changeKodForm
         );
     }
+    private function createChangeKodForm( $kod ){
 
+       return  $this->createFormBuilder(
+                    array('kod' => $kod))
+                    ->add( 'kod', 'hidden' )
+                    ->getForm();
+    }
+      /**
+     * Edits an existing Menu entity.
+     *
+     * @Route("/{id}/change_attr_kod", name="change_attr_kod",
+     * requirements={"id" = "\d+"}) 
+     * @Method("POST")
+     * @Template("ItcKidsBundle:Template\Template:index.html.twig")
+     */
+    public function updateKodAction(Request $request, $id)
+    {
+         $em = $this->getDoctrine()->getManager();
+
+        $templid = $em->getRepository('ItcKidsBundle:Template\Attr')->find($id)->getTemplId();
+        
+        $form = $this->createChangeKodForm($id);
+        $form->bind($request);
+        $data = $form->getData();
+        $newKod = $data['kod'];
+        if ($form->isValid()) {
+            $em = $this->getDoctrine()->getManager();
+            $qb = $em->getRepository('ItcKidsBundle:Template\Attr')
+                        ->createQueryBuilder('M')
+                        ->select('M.kod')
+                        ->where('M.id = :id')
+                        ->setParameter('id', $id);
+            $entity = $qb->getQuery()->getResult();
+            
+            $oldKod = $entity[0]['kod'];
+            
+            $qb = $em->createQueryBuilder('M')
+                        ->update('ItcKidsBundle:Template\Attr', 'M')
+                        ->set('M.kod', $oldKod)
+                        ->where('M.kod = :kod')
+                        ->setParameter('kod', $newKod);               
+            $qb->getQuery()->execute();
+
+            $qb = $em->createQueryBuilder('M')
+                        ->update('ItcKidsBundle:Template\Attr', 'M')
+                        ->set('M.kod', $newKod)
+                        ->where('M.id = :id')
+                        ->setParameter('id', $id);
+            $qb->getQuery()->execute();  
+            return $this->redirect($this->generateUrl('template_edit', array(
+                        'id' => $templid
+                    )));
+        }else{            
+            return false;
+        }
+     }
     /**
      * Displays a form to create a new Template\Attr entity.
      *

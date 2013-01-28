@@ -67,10 +67,13 @@ class AttrValueController extends Controller
 
         $entity  = new AttrValue();
         $entity->setAttr($attr);
-        
+        $name_type=$attr->getAttrtype()->getName();
         $form = $this->createForm(new AttrValueType(), $entity);
         $form->bind($request);
 
+        if($name_type=='text'){
+            $entity->setKod(1);
+        }
         if ($form->isValid()) {
             $em = $this->getDoctrine()->getManager();
             $em->persist($entity);

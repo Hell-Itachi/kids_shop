@@ -24,3 +24,7 @@ table.treeTableGroup tbody tr td {
     height: 30px;
     line-height: 30px;
 }
+.form_attr input[type="number"]{
+    height: 30px;
+    line-height: 30px;
+}

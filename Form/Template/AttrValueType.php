@@ -15,6 +15,7 @@ class AttrValueType extends AbstractType
         $builder
             ->add('id', 'hidden',array('required'=>NULL))
             ->add('value', NULL, array('label'=> ' '))
+            ->add('kod')
             ->add('is_default', NULL, array('required'=>NULL))
         ;
     }

@@ -65,6 +65,7 @@ class AttrValue
 
     public function setKod($kod) {
         $this->kod = $kod;
+        return $this;
     }
 
         /**
