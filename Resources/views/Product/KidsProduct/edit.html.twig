@@ -1,11 +1,15 @@
 {% extends 'ItcAdminBundle::Product/Product/edit.html.twig' %}
+
+
 {% block tabs %}
     <div class = 'card_tab' rel="groups">{{ "related groups"|trans({}, "kids_product") }}</div>
+    <div class = 'card_tab' rel="template">{{ "template"|trans({}, "template") }}</div> 
     
 {% endblock %}
+    
 {% block content %}
     <div class='card_cont' rel='groups'>{% include 'ItcKidsBundle::Product/KidsProduct/showGroups.html.twig' %}</div>
 {% endblock %}
-     {% block  independent_forms %}
-    <div class = 'card_tab' rel="template">{% render 'ItcKidsBundle:Product/KidsProduct:showTemplate' with { 'id': entity.id } %}</div>
-     {% endblock %}
+{% block independent_forms %}
+    <div class = 'card_cont' rel="template">{% render 'ItcKidsBundle:Product/KidsProduct:showTemplate' with { 'id': entity.id } %}</div> 
+{% endblock %}

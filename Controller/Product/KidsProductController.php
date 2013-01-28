@@ -53,7 +53,7 @@ class KidsProductController extends ProductController
         foreach ($entities as $entity) {
            $array[$entity->getId()]= $entity->getName();
         }
-        //print_r($array);
+        print_r($array);
         $ListTemplate = $this->createForm(new \Itc\KidsBundle\Form\Template\TemplateListType(), NULL, 
                array('data' => $array));
         return array(
@@ -66,11 +66,13 @@ class KidsProductController extends ProductController
      *
      * @Route("/{id}/edittemplate", name="product_edit_template")
      * @Method("POST")
-     * @Template()
+     * @Template("ItcKidsBundle:Product\KidsProduct:edit.html.twig")
      */
     public function edittemplateAction(Request $request, $id)
     {
         $em = $this->getDoctrine()->getManager();
+       
+        var_dump($_POST['itc_kidsbundle_templatelist']);
         $entities = $em->getRepository('Itc\KidsBundle\Entity\Template\Template')->findAll();
         foreach ($entities as $entity) {
            $array[$entity->getId()]= $entity->getName();
@@ -78,12 +80,10 @@ class KidsProductController extends ProductController
         $form = $this->createForm(new \Itc\KidsBundle\Form\Template\TemplateListType(), NULL, 
                array('data' => $array));
         $entity = $em->getRepository('Itc\KidsBundle\Entity\Product\KidsProduct')->find($id);
-        
         $form->bindRequest($request);
-        $data = $form->getValues();
-        print_r($data);
+        $data = $form->getData() ;
         return array(
-            'list_template' => $ListTemplate->createView(),
+            'list_template' => $form->createView(),
             'id' => $id
         );
     }
