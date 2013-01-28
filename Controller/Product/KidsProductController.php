@@ -100,8 +100,8 @@ class KidsProductController extends ProductController
     private function createChangeCheckForm( ){
 
        return  $this->createFormBuilder(
-                    array('id' => "", "prod_id"=>""))
-                    ->add( 'id', 'hidden', array('attr' => array('class'=>'chekidattr')) )
+                    array('id_atr' => "", "prod_id"=>""))
+                    ->add( 'id_atr', 'hidden', array('attr' => array('class'=>'chekidattr')) )
                     ->add('prod_id', 'hidden',array('attr' => array('class'=>'chekidprod')) )
                     ->getForm();
     }
@@ -150,7 +150,7 @@ class KidsProductController extends ProductController
                     $em->flush();
             }
         }
-        return $this->redirect($this->generateUrl('product_edit', array('id' => $entity->getId())));
+        return $this->redirect($this->generateUrl('product_edit', array('id' => $id)));
     }
     /**
      *
@@ -161,7 +161,7 @@ class KidsProductController extends ProductController
     public function DeleteattrprodAction(Request $request, $id)
     {
         $attrid=$request->request->get('form');
-        print_r($attrid['id']);
+        print_r($attrid['id_atr']);
         $em = $this->getDoctrine()->getManager();
         $productval = $em->getRepository('Itc\KidsBundle\Entity\Template\KidsProductAttrvalue')->find($attrid['id']);
         if($productval->getIsVisible()==1){
