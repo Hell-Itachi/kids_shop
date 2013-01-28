@@ -161,9 +161,8 @@ class KidsProductController extends ProductController
     public function DeleteattrprodAction(Request $request, $id)
     {
         $attrid=$request->request->get('form');
-        print_r($attrid['id_atr']);
         $em = $this->getDoctrine()->getManager();
-        $productval = $em->getRepository('Itc\KidsBundle\Entity\Template\KidsProductAttrvalue')->find($attrid['id']);
+        $productval = $em->getRepository('Itc\KidsBundle\Entity\Template\KidsProductAttrvalue')->find($attrid['id_atr']);
         if($productval->getIsVisible()==1){
         $productval->setIsVisible("0");}
         else{$productval->setIsVisible("1");}
