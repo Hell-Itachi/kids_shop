@@ -1,11 +1,17 @@
-<div class="load_template">
-<form action="{{ path('product_edit_template', { 'id': id}) }}" method="post" {{ form_enctype(list_template) }}>
-    {{ form_widget(list_template) }}
-        <input type="hidden" name="route" value="product_edit_template"/>
-    <p>
-        <input type="button" value="Применить" class="save_template"/>
-    </p>
-</form>
-<br />
-<div class="load_template_data" ></div>
-</div>
+{% block prod_groups %}
+<script src="{{ asset ( 'bundles/itckids/js/content.js' ) }}" ></script>
+<link rel="stylesheet" href="{{ asset ( 'bundles/itckids/css/kidsCss.css' ) }}" />
+
+        <div class="load_template">
+        <form action="{{ path('product_edit_template', { 'id': id}) }}" method="post" {{ form_enctype(list_template) }}>
+            {{ form_widget(list_template) }}
+                <input type="hidden" name="route" value="product_edit_template"/>
+            <p>
+                <input type="submit" value="Применить" class="save_template"/>
+            </p>
+        </form>
+        <br />
+        <div class="load_template_data" ></div>
+        </div>
+
+{% endblock %}  
