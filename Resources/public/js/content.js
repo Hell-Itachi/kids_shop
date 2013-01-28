@@ -22,15 +22,12 @@ $( document ).ready(function() {
     });
 });
 
-$(".loadContractData").live("click", function(){
-           var search_route = $(this).data("route");
-           var search_link = $(this).data("link");
-            $.getJSON( "/itc/ru/"+search_route+".json", {
-                term: $(search_link).val()
-            },  function(data){
-                $('load_template_data').html(
-                'valera'
-            );
-            });                           
-     });
+function Reset(check){
+    var attr   = check.attr('rel');
+    var prodid = check.val();
+    $(".chekidattr").val(attr);
+    $(".chekidprod").val(prodid);
+    $("#form_ckeck").submit();
+    
+}
     

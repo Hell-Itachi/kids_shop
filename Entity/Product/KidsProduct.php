@@ -55,7 +55,7 @@ class KidsProduct extends Product
     }
 
     public function addAttrvalues($attrvalues) {
-        $this->attrvalues[] = $attrvalues;
+        $this->productattrvalues[] = $attrvalues;
     }
     /**
      * Remove menus
@@ -65,11 +65,11 @@ class KidsProduct extends Product
     
     public function removeAttrvalues(\Itc\KidsBundle\Entity\Template\AttrValue $attrvalues)
     {
-        $this->attrvalues->removeElement($attrvalues);
+        $this->productattrvalues->removeElement($attrvalues);
     }
     
     public function getAttrvalues() {
-        return $this->attrvalues;
+        return $this->productattrvalues;
     }
 
     function __construct() {
