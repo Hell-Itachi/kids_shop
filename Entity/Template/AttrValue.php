@@ -26,7 +26,7 @@ class AttrValue
     /**
      * @var string
      *
-     * @ORM\Column(name="value", type="string", length=150)
+     * @ORM\Column(name="value", type="string", length=150, nullable=true)
      */
     private $value;
 

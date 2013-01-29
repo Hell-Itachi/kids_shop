@@ -59,4 +59,15 @@
  <form action="{{ path('delete_attr_prod', { 'id': id }) }}" method="post" id="form_ckeck">
                                                 {{ form_widget(check_form) }}
  </form>
+
+                <div class="modal-body">
+                <form action="{{ path('attributs_create_for_prod', { 'prodid': id }) }}" method="post" {{ form_enctype(form_add_prod_tov) }} class="form_attr">
+                <p>
+                    {{ form_widget(form_add_prod_tov) }}
+                </p>
+                <p>
+                   <input type="submit" name="Сохранить" value="Сохранить"/>
+                </p>
+                </form>
+                </div>
 {% endblock %}  

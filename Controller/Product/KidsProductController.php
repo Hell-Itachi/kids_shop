@@ -9,6 +9,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Itc\AdminBundle\Controller\Product\ProductController;
 use Itc\KidsBundle\Entity\Template\KidsProductAttrvalue;
+use Itc\KidsBundle\Entity\Template\Attr;
 
 class KidsProductController extends ProductController
 {
@@ -50,7 +51,7 @@ class KidsProductController extends ProductController
     public function showTemplateAction($id)
     {
         $em = $this->getDoctrine()->getManager();
-        $entities = $em->getRepository('Itc\KidsBundle\Entity\Template\Template')->findAll();
+        $entities = $em->getRepository('Itc\KidsBundle\Entity\Template\Template')->findBy(array("is_default" => 0));
         $array="";
         foreach ($entities as $entity) {
            $array[$entity->getId()]= $entity->getName();
@@ -86,6 +87,9 @@ class KidsProductController extends ProductController
         $createChangeCheckForm = 
                     $this->createChangeCheckForm()
                             ->createView();
+        $prod_atrr = new \Itc\KidsBundle\Entity\Template\Attr();
+        $form_new_prod_attr = $this->createForm(new \Itc\KidsBundle\Form\Template\AttrType("appendedDropdownButton"), $prod_atrr,
+                     array("attr" => array("new" => true, "class"=>"appendedDropdownButton")));
         return array(
             'list_template' => $ListTemplate->createView(),
             'id' => $id,
@@ -94,7 +98,8 @@ class KidsProductController extends ProductController
             'edit_form'=>$editForm,
             'check_form'=>$createChangeCheckForm,
             'checkeds'=>$checked,
-            'mainid'=>$mainid
+            'mainid'=>$mainid,
+            'form_add_prod_tov'=>$form_new_prod_attr->createView()
         );
     }
     private function createChangeCheckForm( ){

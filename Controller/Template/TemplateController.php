@@ -26,7 +26,7 @@ class TemplateController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
 
-        $entities = $em->getRepository('ItcKidsBundle:Template\Template')->findAll();
+        $entities = $em->getRepository('ItcKidsBundle:Template\Template')->findBy(array("is_default" => 0));
 
         return array(
             'entities' => $entities,
@@ -88,7 +88,7 @@ class TemplateController extends Controller
         $em = $this->getDoctrine()->getManager();
 
         $entity = $em->getRepository('ItcKidsBundle:Template\Template')->find($id);
-        $entities = $em->getRepository('ItcKidsBundle:Template\Template')->findAll();
+        $entities = $em->getRepository('ItcKidsBundle:Template\Template')->findBy(array("is_default" => 0));
         if (!$entity) {
             throw $this->createNotFoundException('Unable to find Template\Template entity.');
         }

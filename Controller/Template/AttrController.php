@@ -8,7 +8,10 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Itc\KidsBundle\Entity\Template\Attr;
+use Itc\KidsBundle\Entity\Template\AttrValue;
+use Itc\KidsBundle\Entity\Product\KidsProduct;
 use Itc\KidsBundle\Form\Template\AttrType;
+use Itc\KidsBundle\Entity\Template\KidsProductAttrvalue;
 
 /**
  * Template\Attr controller.
@@ -160,6 +163,53 @@ class AttrController extends Controller
             'entity' => $entity,
             'form'   => $form->createView(),
         );
+    }
+    /**
+     * Creates a new Template\Attr entity.
+     *
+     * @Route("/{prodid}/attrforprod", name="attributs_create_for_prod")
+     * @Method("POST")
+     * @Template()
+     */
+    public function createattrforprodAction(Request $request, $prodid)
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        $product = $em->getRepository('ItcKidsBundle:Product\KidsProduct')->find($prodid);
+        $template = $em->getRepository('Itc\KidsBundle\Entity\Template\Template')->findBy(array("is_default" => 1));
+        print_r(is_object($template));
+        foreach ($template as $v) {
+            $templid = $v->getId();
+            $template = $v;
+        }
+        $entity  = new Attr();
+        $entity->setTemplId($templid);
+        $entity->setTempl($template);
+
+        $attr_val_new=new AttrValue();
+        $attr_val_new->setAttr($entity);
+        $attr_val_new->setIsDefault("1");
+        
+         $prod_attr  = new KidsProductAttrvalue();
+                  $prod_attr->setProduct($product);
+                  $prod_attr->setAttrvalue($attr_val_new);
+                  $prod_attr->setIsVisible("1");
+            $form = $this->createForm(new AttrType("appendedDropdownButton"), $entity,
+                     array("attr" => array("new" => true, "class"=>"appendedDropdownButton")));
+        $form->bind($request);
+        
+        if ($form->isValid()) {       
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($entity);
+            $em->persist($attr_val_new);
+            $em->persist($prod_attr);
+            $em->flush();
+        }
+            return $this->redirect($this->generateUrl('product_edit', array(
+                        'id' => $prodid
+                    )));
+
+
     }
 
     /**
