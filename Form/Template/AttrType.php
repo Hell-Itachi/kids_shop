@@ -16,7 +16,8 @@ class AttrType extends AbstractType
     {
         $builder
             ->add('name')
-            ->add('attrtype');
+            ->add('attrtype')
+            ->add('kod');
                 if($options['attr']['new']){
            $builder ->add('attrvalues', 'collection', array('type' => new AttrValueType($options['attr']['class'])));}
         

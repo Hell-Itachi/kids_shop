@@ -15,6 +15,7 @@
                             <td>
                                     <div class="input-append">
                                         {{ form_widget(edit_form[entity.id].name,{ 'attr' : { 'class' : 'input-xlarge'} })  }}
+                                       <div style="display:none"> {{ form_widget(edit_form[entity.id].kod)  }}</div>
                                          <div class="btn-group">
                                         <button data-toggle="dropdown" class="btn dropdown-toggle">
                                         Действие
@@ -23,11 +24,11 @@
                                         <ul class="dropdown-menu">
                                         <li><a href="#attr_save{{entity.id}}"  onclick="$('.attr_save{{entity.id}}').trigger('click')"><i class="icon-edit"></i>Сохранить</a></li>
                                         <li><a href="#" onclick="$('.delete_attr_{{entity.id}}').trigger('click')"><i class="icon-remove"></i>Удалить</a></li>
-                                        <li><a href=""><i class="icon-arrow-up"></i>Вверх</a></li>
-                                        <li><a href=""><i class="icon-arrow-down"></i>Вниз</a></li>
-                                            <li class="divider"></li>
-                                            <li><a href="">По умолчанию</a></li><a href=""></a></ul><a href="">
+                                       {% if loop.index!=loop.first %} <li><a class="template_up change_position_object_template" data-action="up" data-link="#bs-docs-example" data-form="#template_kod_{{entity.kod}}"><i class="icon-arrow-up"></i>Вверх</a></li>{% endif %}
+                                       {% if loop.index!=loop.last %} <li><a class="template_down change_position_object_template" data-action="down" data-link="#bs-docs-example" data-form="#template_kod_{{entity.kod}}"><i class="icon-arrow-down"></i>Вниз</a></li>{% endif %}
+                                        <a href=""></a></ul><a href="">
                                         </a></div>
+                                          
                                     </div>
                              </td>  
                              <td>
@@ -58,6 +59,8 @@
                                              {{ buttons }}
                                         {% endif %}
                                       </div>
+                  
+                                     <div style="display:none"> {{ form_widget(attrvalue.kod) }}</div>
                             {% endfor %}
                     {% set addvalue %}
                     <p>
@@ -79,6 +82,9 @@
                     </tbody>
                   </table>
                 </form>
+                  <form action="{{ path('change_attr_kod', { 'id': entity.id }) }}" method="post" {{ form_enctype(kod_form[entity.id]) }} id="template_kod_{{kod_form[entity.id].kod.get("value")}}">
+                                                {{ form_widget(kod_form[entity.id]) }}
+                  </form>
                <form action="{{ path('attributs_delete', { 'templid': templid, 'id': entity.id }) }}" method="post" style="display:none">
                     <input type="submit" value="Удалить" class="delete_attr_{{entity.id}}"/>
                     {{ form_rest(delete_form[entity.id]) }}

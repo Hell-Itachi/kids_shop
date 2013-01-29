@@ -43,7 +43,26 @@ class Template
      * @ORM\Column(name="content", type="string", length=100, nullable=true)
      */
     private $content;
-
+    /**
+     * @var boolean
+     *
+     * @ORM\Column(name="is_default", type="boolean")
+     */
+    private $is_default;
+    /**
+     * 
+     * @return type
+     */
+    public function getIsDefault() {
+        return $this->is_default;
+    }
+    /**
+     * 
+     * @param type $is_default
+     */
+    public function setIsDefault($is_default) {
+        $this->is_default = $is_default;
+    }
     /**
      * Get id
      *

@@ -1,11 +1,73 @@
-<div class="load_template">
-<form action="{{ path('product_edit_template', { 'id': id}) }}" method="post" {{ form_enctype(list_template) }}>
-    {{ form_widget(list_template) }}
-        <input type="hidden" name="route" value="product_edit_template"/>
-    <p>
-        <input type="button" value="Применить" class="save_template"/>
-    </p>
-</form>
-<br />
-<div class="load_template_data" ></div>
-</div>
+{% block prod_groups %}
+<script src="{{ asset ( 'bundles/itckids/js/content.js' ) }}" ></script>
+<link rel="stylesheet" href="{{ asset ( 'bundles/itckids/css/kidsCss.css' ) }}" />
+
+        <div class="load_template">
+        <form action="{{ path('product_edit_template', { 'id': id}) }}" method="post" {{ form_enctype(list_template) }}>
+            {{ form_widget(list_template) }}
+                <input type="hidden" name="route" value="product_edit_template"/>
+            <p>
+                <input type="submit" value="Применить" class="save_template"/>
+            </p>
+        </form>
+        <br />
+        <div class="load_template_data" ></div>
+        </div>
+
+{% for entity in entities %}
+                 <form action="{{ path('attributs_update', {'templid': templid, 'id':  entity.id }) }}" method="post" {{ form_enctype(edit_form[entity.id]) }} class="attr_save_form_{{entity.id}}">
+                  <table class="table table-hover table-condensed">
+                    <tbody>
+                        <tr>
+                            <td>
+                                    <div class="input-append">
+                                        {{ form_widget(edit_form[entity.id].name,{ 'attr' : { 'class' : 'input-xlarge'} })  }}
+                                       <div style="display:none"> {{ form_widget(edit_form[entity.id].kod)  }}</div>
+                                      
+                                    </div>
+                             </td>  
+                             <td>
+                                    {{ form_widget(edit_form[entity.id].attrtype)}}
+                             </td> 
+                             <td>
+                            {% for attrvalue in edit_form[entity.id].attrvalues %}
+                                   
+                                     <div class="input-append">
+                                         {% set ckeck %}
+                                        {% if checkeds[attrvalue.id.get("value")]!='1' %}
+                                             {% else %}
+                                              checked="checked"
+                                         {% endif %}
+                                              {% endset %}
+                                    {{ form_widget(attrvalue.value) }} <input type="checkbox" rel="{{mainid[attrvalue.id.get("value")]}}" value="{{ id }}" {{ ckeck }} onclick="Reset($(this))"/>
+                                        
+                                      </div>
+                  
+                                    
+                            {% endfor %}
+
+                             </td>
+                    {{ form_widget(edit_form[entity.id]._token) }}
+                         <input type="submit" value="Сохранить" style="display:none" class="attr_save{{entity.id}}"/>
+                        
+                   
+                    </tbody>
+                  </table>
+                </form>
+          
+    {% endfor %}
+ <form action="{{ path('delete_attr_prod', { 'id': id }) }}" method="post" id="form_ckeck">
+                                                {{ form_widget(check_form) }}
+ </form>
+
+                <div class="modal-body">
+                <form action="{{ path('attributs_create_for_prod', { 'prodid': id }) }}" method="post" {{ form_enctype(form_add_prod_tov) }} class="form_attr">
+                <p>
+                    {{ form_widget(form_add_prod_tov) }}
+                </p>
+                <p>
+                   <input type="submit" name="Сохранить" value="Сохранить"/>
+                </p>
+                </form>
+                </div>
+{% endblock %}  

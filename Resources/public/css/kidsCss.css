@@ -27,3 +27,7 @@ table.treeTableGroup tbody tr td {
 table.treeTableGroup{
     border-style: none !important;
 }
+.form_attr input[type="number"]{
+    height: 30px;
+    line-height: 30px;
+}

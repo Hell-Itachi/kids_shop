@@ -4,6 +4,7 @@
 
 
 <table class="treeTableGroup">
+    {% if form.productGroups is defined %}
     {% for groups in form.productGroups %}
         {% if child[groups.get('value')] == null %}
         <tr id="node-{{groups.get('value')}}">
@@ -12,6 +13,7 @@
             {{ _self.items(groups.get('value'),child,form.productGroups) }}
         {% endif %} 
     {% endfor %}
+    {% endif %}
 </table>
 {% endblock %}
 
