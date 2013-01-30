@@ -65,6 +65,7 @@ class TemplateController extends Controller
 
         if ($form->isValid()) {
             $em = $this->getDoctrine()->getManager();
+            $entity->setIsDefault(0);
             $em->persist($entity);
             $em->flush();
 
