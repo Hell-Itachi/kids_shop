@@ -1,0 +1,38 @@
+{% extends 'ItcAdminBundle::layout.html.twig' %}
+{% block menu %}
+{% endblock %}
+{% block body %}
+{{ tinymce_init() }}
+<h1>Методы доставки</h1>
+
+<form action="{{ path('shipping_update', { 'id': entity.id }) }}" method="post" {{ form_enctype(edit_form) }}>
+    {{ form_widget(edit_form) }}
+    <p>
+        <button type="submit">Редактировать</button>
+    </p>
+</form>
+    <form id = 'ms_edit_icon' action="{{ path('shipping_update_image', { 'id': entity.id }) }}" method="post" {{ form_enctype(image_form) }}>
+        {{form_errors(image_form)}}
+        <div class = 'menu_sys_icon_loader'>
+            {% if entity.iconImage is not null %}
+                <img  class = 'menu_sys_iconImage' style = 'z-index: 0;' src = '{{ vich_uploader_asset(entity, 'iconImage') | apply_filter('my_thumb') }}?0328478327489' />
+            {% else %}
+                <img style = 'z-index: 0;' src = '/bundles/itcadmin/images/m_menu.gif' />
+            {% endif %}
+            <div> 
+                {{ form_widget( image_form["iconImage"], { 'attr': { 'class': 'hidden_loader' } } ) }}
+            </div>
+                {{ form_rest(image_form) }}
+        </div>
+    </form>
+<ul class="record_actions">
+
+    <li>
+        <form action="{{ path('shipping_delete', { 'id': entity.id }) }}" method="post">
+            {{ form_widget(delete_form) }}
+            <button type="submit">Удалить</button>
+        </form>
+    </li>
+</ul>
+
+{% endblock %}
