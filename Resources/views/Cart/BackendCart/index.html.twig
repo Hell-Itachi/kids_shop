@@ -1,0 +1,16 @@
+<div>
+    {% if cart is empty %}
+        <div> No product in cart </div>
+    {% endif %}
+
+    {% for product in cart %}
+        <div>
+            <span>{{ product.price }}</span>
+            <span>{{ product.title }}</span>
+            <span>{{ product.amount }}</span>
+        </div>
+    {% endfor %}
+</div>
+    
+    
+
