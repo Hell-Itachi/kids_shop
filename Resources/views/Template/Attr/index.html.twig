@@ -64,7 +64,7 @@
                             {% endfor %}
                     {% set addvalue %}
                     <p>
-                         <a href="{{path('attributsvalue_new', { 'id':  entity.id }) }}" class="btn btn-success btn-mini pull-right">
+                         <a href="{{path('attributsvalue_new', { 'id':  entity.id, 'type':'template', 'someid': entity.id }) }}" class="btn btn-success btn-mini pull-right">
                              <i class="icon-plus-sign"></i>
                              Добавить значение
                          </a>
@@ -85,7 +85,7 @@
                   <form action="{{ path('change_attr_kod', { 'id': entity.id }) }}" method="post" {{ form_enctype(kod_form[entity.id]) }} id="template_kod_{{kod_form[entity.id].kod.get("value")}}">
                                                 {{ form_widget(kod_form[entity.id]) }}
                   </form>
-               <form action="{{ path('attributs_delete', { 'templid': templid, 'id': entity.id }) }}" method="post" style="display:none">
+               <form action="{{ path('attributs_delete', { 'templid': templid, 'id': entity.id, 'type': 'template', 'someid': templid }) }}" method="post" style="display:none">
                     <input type="submit" value="Удалить" class="delete_attr_{{entity.id}}"/>
                     {{ form_rest(delete_form[entity.id]) }}
                 </form>

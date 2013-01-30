@@ -37,10 +37,10 @@ class AttrValueController extends Controller
     /**
      * Displays a form to create a new Template\AttrValue entity.
      *
-     * @Route("/{id}/new", name="attributsvalue_new")
+     * @Route("/{id}/{type}/{someid}/new", name="attributsvalue_new")
      * @Template()
      */
-    public function newAction($id)
+    public function newAction($id, $type ,$someid)
     {
         $entity = new AttrValue();
         $form   = $this->createForm(new AttrValueType(), $entity);
@@ -48,18 +48,20 @@ class AttrValueController extends Controller
         return array(
             'entity' => $entity,
             'form'   => $form->createView(),
-            'attrid' => $id
+            'attrid' => $id,
+            'type'   => $type,
+            'some'   => $someid
         );
     }
 
     /**
      * Creates a new Template\AttrValue entity.
      *
-     * @Route("/{id}/create", name="attributsvalue_create")
+     * @Route("/{id}/{type}/{someid}/create", name="attributsvalue_create")
      * @Method("POST")
      * @Template("ItcKidsBundle:Template\AttrValue:new.html.twig")
      */
-    public function createAction(Request $request, $id)
+    public function createAction(Request $request, $id, $type ,$someid)
     {
         $em = $this->getDoctrine()->getManager();
 
@@ -76,10 +78,19 @@ class AttrValueController extends Controller
         }
         if ($form->isValid()) {
             $em = $this->getDoctrine()->getManager();
+            if($type=='product'){
+                $product = $em->getRepository('Itc\KidsBundle\Entity\Product\KidsProduct')->find($someid);
+                $prod_attr  = new \Itc\KidsBundle\Entity\Template\KidsProductAttrvalue();
+                $prod_attr->setProduct($product);
+                $prod_attr->setAttrvalue($entity);
+                $prod_attr->setIsVisible("1");
+                $em->persist($prod_attr);
+            }
             $em->persist($entity);
             $em->flush();
             $templid=$entity->getAttr()->getTemplId();
-            return $this->redirect($this->generateUrl('template_edit', array('id' => $templid)));
+            if($type=='product'){$templid=$someid;}
+            return $this->redirect($this->generateUrl($type.'_edit', array('id' => $templid)));
         }
 
         return array(

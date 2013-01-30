@@ -64,24 +64,28 @@ class KidsProductController extends ProductController
         $templid="";
         $editForm="";
         if(is_object($product_values)){
-            $ids="";
             $checked="";
             $mainid="";
+            $templid=$product_values[0]->getAttrvalue()->getAttr()->getTemplId();
             foreach ($product_values as $val) {
-                $templid=$val->getAttrvalue()->getAttr()->getTemplId();
-                $ids[]=$val->getAttrvalue()->getAttr()->getId();
                 $checked[$val->getAttrvalue()->getId()]=$val->getIsVisible();
                 $mainid[$val->getAttrvalue()->getId()]=$val->getId();
             }
             
-             $entities = $em->getRepository('ItcKidsBundle:Template\Attr')->findBy(
-                array('id' => $ids), array('kod'=>'ASC'));
-       
-        $editForm="";
+             $entities = $em->getRepository('ItcKidsBundle:Template\Attr')
+                                ->createQueryBuilder('A')
+                                ->select('A')
+                                ->innerJoin('A.attrvalues', 'V')
+                                ->innerJoin('V.productattrvalues','P')
+                                ->where("P.product = :id")
+                                ->setParameter('id', $product)
+                                ->orderBy('A.kod', 'ASC')
+                                ->getQuery()->execute();
+    
         foreach ($entities as $entity){
-            $editForm[$entity->getId()] = $this->createForm(new \Itc\KidsBundle\Form\Template\AttrType($entity->getAttrtype()->getName()), $entity,
-                     array("attr" => array("new" => true, "class"=>$entity->getAttrtype()->getName())))->createView();
-         
+                       $editForm[$entity->getId()] = $this->createAttributesForm($entity, $product)->createView();
+                                   $deleteForm[$entity->getId()] = $this->createDeleteForm($entity->getId())
+                            ->createView();
             }  
         }
         $createChangeCheckForm = 
@@ -99,8 +103,63 @@ class KidsProductController extends ProductController
             'check_form'=>$createChangeCheckForm,
             'checkeds'=>$checked,
             'mainid'=>$mainid,
+            'delete_form'=>$deleteForm,
             'form_add_prod_tov'=>$form_new_prod_attr->createView()
         );
+    }
+private function createAttributesForm( $entity, $product ){
+        
+        $default=$entity->getTempl()->getIsDefault();
+        
+       if($entity->getAttrtype()->getName()=='text'){
+           $attr=$entity->getAttrvalues();
+           foreach($attr as $val){
+           $attr = $val;
+           }
+            $em = $this->getDoctrine()->getManager();
+            $attr_prod = $em->getRepository('Itc\KidsBundle\Entity\Template\KidsProductAttrvalue')->findBy(array("product"=>$product, "attrvalue"=>$attr));
+            foreach ($attr_prod as $value) {
+                $attr_prod=$value;
+            }
+            return  $this->createFormBuilder(
+                    array('name' => $entity->getName(), "attrtype"=>array($entity->getAttrtype()->getName()), 
+                        "attrvalues"=>$attr_prod->getValue(), 'default'=>$default, 'lists'=>0))
+                    ->add('name')
+                    ->add('default', 'hidden')
+                    ->add('lists', 'hidden')
+                    ->add('attrtype', 'choice', array('choices' => array($entity->getAttrtype()->getName())))
+                    ->add('attrvalues')
+                    ->getForm();
+       }
+       else
+                    $em = $this->getDoctrine()->getManager();
+                    $qb= $em->getRepository('ItcKidsBundle:Template\AttrValue')
+                                ->createQueryBuilder('A')
+                                ->select('A')
+                                ->where('A.attr=:attr')
+                                ->setParameter('attr', $entity);
+            return  $this->createFormBuilder(
+                    array('name' => $entity->getName(), "attrtype"=>"", "attrvalues"=>array($entity->getAttrvalues()), 'default'=>$default, 'lists'=>1))
+                    ->add('name')
+                    ->add('default', 'hidden')
+                    ->add('lists', 'hidden')
+                    ->add('attrtype', 'choice', array('choices' => array($entity->getAttrtype()->getName())))
+                    ->add('attrvalues', 'entity', array(
+                        'class' => 'ItcKidsBundle:Template\AttrValue',
+                        'expanded' => true,
+                        'query_builder' => $qb,
+                           )
+      )
+                    ->getForm();
+        
+        
+    }
+   private function createDeleteForm($id)
+    {
+        return $this->createFormBuilder(array('id' => $id))
+            ->add('id', 'hidden')
+            ->getForm()
+        ;
     }
     private function createChangeCheckForm( ){
 
@@ -110,6 +169,9 @@ class KidsProductController extends ProductController
                     ->add('prod_id', 'hidden',array('attr' => array('class'=>'chekidprod')) )
                     ->getForm();
     }
+    
+
+    
     /**
      *
      * @Route("/{id}/edittemplate", name="product_edit_template")
@@ -174,6 +236,35 @@ class KidsProductController extends ProductController
         $em->persist($productval);
                     $em->flush();
         return $this->redirect($this->generateUrl('product_edit', array('id' => $id)));
+    }
+        /**
+     *
+     * @Route("/{id}/{prodid}/deleteattrprod", name="attributs_for_prod_update")
+     * @Method("POST")
+     * @Template()
+     */
+    public function AttrForUpdateprodAction(Request $request, $id, $prodid)
+    {
+        $form=$request->request->get('form');
+        $em = $this->getDoctrine()->getManager();
+        $attr = $em->getRepository('Itc\KidsBundle\Entity\Template\Attr')->find($id);
+        $attr_val=$attr->getAttrvalues();
+        foreach ($attr_val as $value) {
+                $attr_prod=$value;
+            }
+        $product = $em->getRepository('Itc\KidsBundle\Entity\Product\KidsProduct')->find($prodid);
+        $productval = $em->getRepository('Itc\KidsBundle\Entity\Template\KidsProductAttrvalue')
+                                ->createQueryBuilder('A')
+                                ->select('A')
+                                ->where("A.product =:id")
+                                ->setParameter('id', $product)
+                                ->andWhere("A.attrvalue =:attr")
+                                ->setParameter('attr', $attr_prod)
+                                ->getQuery()->getOneorNullResult();
+        $productval->setValue($form['attrvalues']);
+        $em->persist($productval);
+                    $em->flush();
+        return $this->redirect($this->generateUrl('product_edit', array('id' => $prodid)));
     }
 }
 

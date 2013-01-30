@@ -5,7 +5,7 @@
                 <h3 id="myModalLabel">Добавление значения атрибута</h3>
                 </div>
                 <div class="modal-body">
-                <form action="{{ path('attributsvalue_create', { 'id': attrid }) }}" method="post" {{ form_enctype(form) }} class="form_attr">
+                <form action="{{ path('attributsvalue_create', { 'id': attrid, 'type':type, 'someid': some }) }}" method="post" {{ form_enctype(form) }} class="form_attr">
                 <p>
                     Название : {{ form_widget(form.value) }}
                 </p>

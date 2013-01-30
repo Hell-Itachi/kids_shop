@@ -173,11 +173,13 @@ class AttrController extends Controller
      */
     public function createattrforprodAction(Request $request, $prodid)
     {
+        $type=$request->request->get('itc_kidsbundle_template_attrtype');
         $em = $this->getDoctrine()->getManager();
-
+        
         $product = $em->getRepository('ItcKidsBundle:Product\KidsProduct')->find($prodid);
+        
         $template = $em->getRepository('Itc\KidsBundle\Entity\Template\Template')->findBy(array("is_default" => 1));
-        print_r(is_object($template));
+        
         foreach ($template as $v) {
             $templid = $v->getId();
             $template = $v;
@@ -185,7 +187,7 @@ class AttrController extends Controller
         $entity  = new Attr();
         $entity->setTemplId($templid);
         $entity->setTempl($template);
-
+       
         $attr_val_new=new AttrValue();
         $attr_val_new->setAttr($entity);
         $attr_val_new->setIsDefault("1");
@@ -194,9 +196,13 @@ class AttrController extends Controller
                   $prod_attr->setProduct($product);
                   $prod_attr->setAttrvalue($attr_val_new);
                   $prod_attr->setIsVisible("1");
+                   if($type["attrtype"]==2){
+                       $attr_val_new->setValue($_POST["first_element"]);
+                       $prod_attr->setValue($_POST["first_element"]);
+                   }
             $form = $this->createForm(new AttrType("appendedDropdownButton"), $entity,
                      array("attr" => array("new" => true, "class"=>"appendedDropdownButton")));
-        $form->bind($request);
+            $form->bind($request);
         
         if ($form->isValid()) {       
             $em = $this->getDoctrine()->getManager();
@@ -281,10 +287,10 @@ class AttrController extends Controller
     /**
      * Deletes a Template\Attr entity.
      *
-     * @Route("/{templid}/delete/{id}", name="attributs_delete")
+     * @Route("/{templid}/delete/{id}/{type}/{someid}", name="attributs_delete")
      * @Method("POST")
      */
-    public function deleteAction(Request $request, $templid, $id)
+    public function deleteAction(Request $request, $templid, $id, $type, $someid)
     {
         $form = $this->createDeleteForm($id);
         $form->bind($request);
@@ -301,7 +307,7 @@ class AttrController extends Controller
             $em->flush();
         }
 
-        return $this->redirect($this->generateUrl('template_edit', array('id' => $templid)));
+        return $this->redirect($this->generateUrl($type.'_edit', array('id' => $someid)));
     }
 
     private function createDeleteForm($id)
