@@ -13,7 +13,7 @@
         <br />
         <div class="load_template_data" ></div>
         </div>
-
+{% if entities is defined %}
 {% for entity in entities %}
                  <form action="{{ path('attributs_for_prod_update', {'id':  entity.id, 'prodid': id }) }}" method="post" {{ form_enctype(edit_form[entity.id]) }} class="attr_save_form_{{entity.id}}">
                   <table class="table table-hover table-condensed">
@@ -80,13 +80,13 @@
                 {% endif %}
 <br /><br /><br />
     {% endfor %}
-
+{% endif %}
 
  <form action="{{ path('delete_attr_prod', { 'id': id }) }}" method="post" id="form_ckeck">
                                                 {{ form_widget(check_form) }}
  </form>
 
-                <div class="modal-body">
+                <div class="modal-body" style="border:1px solid black">
                 <form action="{{ path('attributs_create_for_prod', { 'prodid': id }) }}" method="post" {{ form_enctype(form_add_prod_tov) }} class="form_attr">
                 <p>
                     {{ form_widget(form_add_prod_tov) }}
