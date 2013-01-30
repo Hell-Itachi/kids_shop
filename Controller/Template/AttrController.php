@@ -196,10 +196,10 @@ class AttrController extends Controller
                   $prod_attr->setProduct($product);
                   $prod_attr->setAttrvalue($attr_val_new);
                   $prod_attr->setIsVisible("1");
-                   if($type["attrtype"]==2){
+                  
                        $attr_val_new->setValue($_POST["first_element"]);
                        $prod_attr->setValue($_POST["first_element"]);
-                   }
+                   
             $form = $this->createForm(new AttrType("appendedDropdownButton"), $entity,
                      array("attr" => array("new" => true, "class"=>"appendedDropdownButton")));
             $form->bind($request);
