@@ -51,9 +51,9 @@ class KidsProductController extends ProductController
     public function showTemplateAction($id)
     {
         $em = $this->getDoctrine()->getManager();
-        $entities = $em->getRepository('Itc\KidsBundle\Entity\Template\Template')->findBy(array("is_default" => 0));
+        $temples = $em->getRepository('Itc\KidsBundle\Entity\Template\Template')->findBy(array("is_default" => 0));
         $array="";
-        foreach ($entities as $entity) {
+        foreach ($temples as $entity) {
            $array[$entity->getId()]= $entity->getName();
         }
         $ListTemplate = $this->createForm(new \Itc\KidsBundle\Form\Template\TemplateListType(), NULL, 
@@ -63,9 +63,12 @@ class KidsProductController extends ProductController
         
         $templid="";
         $editForm="";
-        if(is_object($product_values)){
-            $checked="";
-            $mainid="";
+        $deleteForm="";
+        $checked="";
+        $mainid="";
+        $entities="";
+        if(is_object($product_values[0]) && $product_values!=""){
+            
             $templid=$product_values[0]->getAttrvalue()->getAttr()->getTemplId();
             foreach ($product_values as $val) {
                 $checked[$val->getAttrvalue()->getId()]=$val->getIsVisible();
