@@ -35,7 +35,14 @@ class KidsProduct extends Product
      * )
      */
     private $productattrvalues;
-    
+    /**
+     * @ORM\OneToMany(
+     *     targetEntity="Itc\KidsBundle\Entity\Product\KidsProductVideoGalary",
+     *     mappedBy="product",
+     *     cascade={"persist"}
+     * )
+     */
+    protected $videogalleries;
     public function addProductGroups($productgroups) {
         $this->productgroups[] = $productgroups;
     }
@@ -71,10 +78,18 @@ class KidsProduct extends Product
     public function getAttrvalues() {
         return $this->productattrvalues;
     }
-
+    public function  setVideoGalleries($videogallery)
+    {
+        $this->videogalleries[] = $videogallery;
+    }
+    public function  getVideoGalleries()
+    {
+        return $this->videogalleries;
+    }  
     function __construct() {
         parent::__construct();
         $this->productgroups = new ArrayCollection();
         $this->attrvalues = new ArrayCollection();
+        $this->videogalleries = new ArrayCollection();
     }
 }

@@ -1,0 +1,42 @@
+<h1>Список видео</h1>
+
+<table class="records_list">
+    <thead>
+        <tr>
+            <th>Id</th>
+            <th>Код</th>
+            <th>Видео</th>
+            <th>Виден</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+    {% for entity in entities %}
+        <tr>
+            <td><a href="{{ path('videos_edit', { 'id': entity.id,'video_gal': video_gal }) }}">{{ entity.id }}</a></td>
+            <td>{{ entity.kod }}</td>
+            <td>
+                  {% autoescape false %} 
+                        {{ entity.content|raw() }}
+                  {% endautoescape %}   
+            </td>
+            <td>{{ entity.isvisible }}</td>
+            <td>
+                <ul>
+                    <li>
+                        <a href="{{ path('videos_edit', { 'id': entity.id ,'video_gal': video_gal}) }}" class="new_window">Редактировать</a>
+                    </li>
+                </ul>
+            </td>
+        </tr>
+    {% endfor %}
+    </tbody>
+</table>
+
+<ul>
+    <li>
+        <a href="{{ path('videos_new', {'video_gal': video_gal}) }}" class="new_window addbutton">
+            Create a new entry
+        </a>
+    </li>
+</ul>

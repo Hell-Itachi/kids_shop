@@ -1,5 +1,6 @@
-{% extends 'ItcAdminBundle::Product/Product/edit.html.twig' %}
 
+{% extends 'ItcAdminBundle::Product/Product/edit.html.twig' %}
+{% block links %}<h1><a href="{{path('videogallery_new', {'product_id': entity.id})}}" class="menu_sys_edit new_window" target="_blank">Видео галерея</a></h1>{% endblock %}
 
 {% block tabs %}
     <div class = 'card_tab' rel="groups">{{ "related groups"|trans({}, "kids_product") }}</div>
