@@ -1,5 +1,10 @@
-<h1>Banner\BannerImg edit</h1>
-
+{% extends 'ItcAdminBundle::layout.html.twig' %}
+{% block menu %}
+    {# скрываем меню #}
+{% endblock %}
+{% block body %}
+<h1>Редактирование баннера</h1>
+<img  src = '{{ vich_uploader_asset(entity, 'image') }}' >
 <form action="{{ path('bannerimg_update', { 'id': entity.id }) }}" method="post" {{ form_enctype(edit_form) }}>
     {{ form_widget(edit_form) }}
     <p>
@@ -20,3 +25,4 @@
         </form>
     </li>
 </ul>
+{% endblock %}
