@@ -134,7 +134,7 @@ private function createAttributesForm( $entity, $product ){
                     ->add('attrvalues')
                     ->getForm();
        }
-       else
+       else{
                     $em = $this->getDoctrine()->getManager();
                     $qb= $em->getRepository('ItcKidsBundle:Template\AttrValue')
                                 ->createQueryBuilder('A')
@@ -151,10 +151,9 @@ private function createAttributesForm( $entity, $product ){
                         'class' => 'ItcKidsBundle:Template\AttrValue',
                         'expanded' => true,
                         'query_builder' => $qb,
-                           )
-      )
+                           ))
                     ->getForm();
-        
+       }
         
     }
    private function createDeleteForm($id)
