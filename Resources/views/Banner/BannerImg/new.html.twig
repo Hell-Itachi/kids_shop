@@ -1,0 +1,16 @@
+<h1>Banner\BannerImg creation</h1>
+
+<form action="{{ path('bannerimg_create', { 'parent_id': parent_id }) }}" method="post" {{ form_enctype(form) }}>
+    {{ form_widget(form) }}
+    <p>
+        <button type="submit">Create</button>
+    </p>
+</form>
+
+<ul class="record_actions">
+    <li>
+        <a href="{{ path('bannerimg') }}">
+            Back to the list
+        </a>
+    </li>
+</ul>
