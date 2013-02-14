@@ -125,7 +125,7 @@ private function createAttributesForm( $entity, $product ){
                 $attr_prod=$value;
             }
             return  $this->createFormBuilder(
-                    array('name' => $entity->getName(), "attrtype"=>array($entity->getAttrtype()->getName()), 
+                    array('name' => $entity->getName(), "attrtype"=>"", 
                         "attrvalues"=>$attr_prod->getValue(), 'default'=>$default, 'lists'=>0))
                     ->add('name')
                     ->add('default', 'hidden')
