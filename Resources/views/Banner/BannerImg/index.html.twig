@@ -24,7 +24,7 @@
     <tbody>
     {% for entity in entities %}
         <tr id ="tr_{{ entity.id }}">
-            <td><a href="{{ path('bannerimg_show', { 'id': entity.id }) }}">{{ entity.id }}</a></td>
+            <td><a href="{{ path('bannerimg_edit', { 'id': entity.id }) }}">{{ entity.id }}</a></td>
             <td><img  src = '{{ vich_uploader_asset(entity, 'image') }}' ></td>
             <td>{{ entity.alt }}</td>
             <td>{{ entity.kod }}</td>

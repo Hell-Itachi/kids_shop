@@ -1,4 +1,9 @@
-<h1>Banner\BannerImg creation</h1>
+{% extends 'ItcAdminBundle::layout.html.twig' %}
+{% block menu %}
+    {# скрываем меню #}
+{% endblock %}
+{% block body %}
+<h1>Создание банера</h1>
 
 <form action="{{ path('bannerimg_create', { 'parent_id': parent_id }) }}" method="post" {{ form_enctype(form) }}>
     {{ form_widget(form) }}
@@ -14,3 +19,4 @@
         </a>
     </li>
 </ul>
+{% endblock %}

@@ -7,12 +7,16 @@ use Gedmo\Mapping\Annotation as Gedmo;
 use Symfony\Component\Validator\Constraints as Assert;
 use Itc\KidsBundle\Entity\Banner\Banner;
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
-
+use Imagine\Gd\Imagine;
+use Imagine\Image\ImageInterface;
+use Imagine\Image\Box;
+use Itc\AdminBundle\ItcAdminBundle;
 /**
  * BannerImg
  *
  * @ORM\Table()
  * @ORM\Entity
+ * @ORM\HasLifecycleCallbacks
  * @Vich\Uploadable
  */
 class BannerImg
@@ -211,6 +215,23 @@ class BannerImg
     public function getBannerId() {
         return $this->banner_id;
     }
-
+  /**
+     * @ORM\PostPersist
+     */
+    public function thumbImage()
+    {
+        $imagine = new Imagine();
+        $mode    = ImageInterface::THUMBNAIL_OUTBOUND;
+        $size    = new Box($this->banner->getWidth(), $this->banner->getHeight());
+        
+        $container = ItcAdminBundle::getContainer();
+        $helper = 
+            $container->get('vich_uploader.templating.helper.uploader_helper');
+        $rootDir =  $container->get('kernel')->getRootDir();
+        $pathToImage = $rootDir. "/../web".$helper->asset($this, 'image');
+        $image = $imagine->open($pathToImage);
+        $image->thumbnail($size, $mode)
+                  ->save($pathToImage);
+    }
 
 }
