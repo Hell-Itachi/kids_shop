@@ -4,7 +4,7 @@ namespace Itc\KidsBundle\Entity\Product;
 
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\ORM\Event\LifecycleEventArgs;
-use Itc\AdminBundle\Entity\Product\Product;
+use Itc\KidsBundle\Entity\Product\ProductChild;
 use Symfony\Component\Validator\Constraints as Assert;
 use Itc\KidsBundle\Entity\Product\KidsProductGroup;
 use Itc\KidsBundle\Entity\Product\KidsProductProxy;
@@ -16,8 +16,9 @@ use Doctrine\Common\Collections\ArrayCollection;
  *
  * @ORM\Table()
  * @ORM\Entity
+ * @ORM\HasLifecycleCallbacks
  */
-class KidsProduct extends Product
+class KidsProduct extends ProductChild
 {
 
     /**

@@ -4,7 +4,7 @@ namespace Itc\KidsBundle\Entity\Product;
 
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\ORM\Event\LifecycleEventArgs;
-use Itc\AdminBundle\Entity\Product\ProductGroup;
+use Itc\KidsBundle\Entity\Product\ProductGroupChild;
 use Symfony\Component\Validator\Constraints as Assert;
 use Itc\KidsBundle\Entity\Product\KidsProduct;
 use Gedmo\Mapping\Annotation as Gedmo;
@@ -13,8 +13,9 @@ use Gedmo\Mapping\Annotation as Gedmo;
  * KidsProductGroup
  * @ORM\Table()
  * @ORM\Entity
+ * @ORM\HasLifecycleCallbacks
  */
-class KidsProductGroup extends ProductGroup
+class KidsProductGroup extends ProductGroupChild
 {   
     function __construct() {
         parent::__construct();
