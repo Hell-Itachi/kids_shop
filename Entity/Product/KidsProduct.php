@@ -10,6 +10,7 @@ use Itc\KidsBundle\Entity\Product\KidsProductGroup;
 use Itc\KidsBundle\Entity\Product\KidsProductProxy;
 use Itc\KidsBundle\Entity\Product\KidsProductTranslation;
 use Doctrine\Common\Collections\ArrayCollection;
+use Vich\UploaderBundle\Mapping\Annotation as Vich;
 
 /**
  * KidsProduct
@@ -17,6 +18,7 @@ use Doctrine\Common\Collections\ArrayCollection;
  * @ORM\Table()
  * @ORM\Entity
  * @ORM\HasLifecycleCallbacks
+ * @Vich\Uploadable
  */
 class KidsProduct extends ProductChild
 {
