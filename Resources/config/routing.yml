@@ -6,4 +6,12 @@ kids:
     requirements:
       _locale : \w{2} 
 
+product:
+    prefix:   /itc/{_locale}/product
+    resource: "@ItcKidsBundle/Controller/Product/KidsProductController.php"
+    type:     annotation
+    defaults: {_locale: %locale% }
+    requirements:
+      _locale : \w{2} 
+      
       
