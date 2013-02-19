@@ -38,6 +38,6 @@ class KidsProductGroup extends ProductGroup
      */
     protected $products;
     
-      
+    public $parent_id;  
     
 }
