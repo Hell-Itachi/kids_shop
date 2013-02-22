@@ -1,0 +1,61 @@
+<h1>User\Adress</h1>
+
+<table class="record_properties">
+    <tbody>
+        <tr>
+            <th>Id</th>
+            <td>{{ entity.id }}</td>
+        </tr>
+        <tr>
+            <th>Userid</th>
+            <td>{{ entity.userid }}</td>
+        </tr>
+        <tr>
+            <th>Fio</th>
+            <td>{{ entity.fio }}</td>
+        </tr>
+        <tr>
+            <th>H_num</th>
+            <td>{{ entity.hnum }}</td>
+        </tr>
+        <tr>
+            <th>Street</th>
+            <td>{{ entity.street }}</td>
+        </tr>
+        <tr>
+            <th>City</th>
+            <td>{{ entity.city }}</td>
+        </tr>
+        <tr>
+            <th>Postcode</th>
+            <td>{{ entity.postcode }}</td>
+        </tr>
+        <tr>
+            <th>State</th>
+            <td>{{ entity.state }}</td>
+        </tr>
+        <tr>
+            <th>Pd_id</th>
+            <td>{{ entity.pdid }}</td>
+        </tr>
+    </tbody>
+</table>
+
+<ul class="record_actions">
+    <li>
+        <a href="{{ path('user_addr') }}">
+            Back to the list
+        </a>
+    </li>
+    <li>
+        <a href="{{ path('user_addr_edit', { 'id': entity.id }) }}">
+            Edit
+        </a>
+    </li>
+    <li>
+        <form action="{{ path('user_addr_delete', { 'id': entity.id }) }}" method="post">
+            {{ form_widget(delete_form) }}
+            <button type="submit">Delete</button>
+        </form>
+    </li>
+</ul>

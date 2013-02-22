@@ -3,9 +3,9 @@
 {% endblock %}
 {% block body %}
 {{ tinymce_init() }}
-<h1>Методы доставки</h1>
+<h1>Методы оплаты</h1>
 
-<form action="{{ path('shipping_create') }}" method="post" {{ form_enctype(form) }}>
+<form action="{{ path('pay_meth_create') }}" method="post" {{ form_enctype(form) }}>
     {{ form_widget(form) }}
       <div class = 'menu_sys_icon_loader'>
 
