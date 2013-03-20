@@ -3,7 +3,7 @@
 {% endblock %}
 {% block body %}
 {{ tinymce_init() }}
-
+{#
 <div class = 'menu_sys_top_menu_bg'></div>
 <div class = 'menu_sys_main_conteiner'>
 <h1 class = 'menu_sys_h1'>Создание видео
@@ -19,5 +19,44 @@
         <button type="submit"  class = 'menu_sys_save_button'></button>
     </p>
 </form>
+</div>#}
+
+<form action="{{ path('videos_create', {'video_gal':video_gal}) }}" method="post" class="menu-items-form" {{ form_enctype(form) }}>
+<div class="form-title form-title-ins">
+        <div class="form-title-content">
+                <i class="item-edit-icon"></i>
+                <div class="item-controls">
+                        <a href="#" class="save-item" title="Сохранить" onclick="$('.menu-items-form').submit()"></a>
+                        <div class="clear"></div>
+                </div>
+                <span class="title">Создать видео</span>
+                <span></span>
+                <div class="clear"></div>
+        </div>
 </div>
+        <br />
+<div class="menu-item-info">
+       <div class="item-info">
+                <label for="item-tag">Код</label>
+                {{ form_widget( form.kod ) }}
+        </div>
+       <div class="item-info">
+                <label for="item-tag">Виден</label>
+                {{ form_widget( form.is_visible ) }}
+        </div>
+</div>
+<br />
+<div id="tabs" class="tabs-wrap">
+      <ul>
+        <li><a href="#tabs-1">Описание</a></li>
+      </ul>
+<div id="tabs-1">
+<div class="tx-fl">
+    <label for="item-name">Название</label>
+    {{ form_widget( form.content ) }}
+</div>
+</div>
+</div>
+{{ form_rest(form) }}
+</form>
 {% endblock %}
