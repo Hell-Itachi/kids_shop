@@ -1,43 +1,75 @@
 {% extends 'ItcAdminBundle::layout.html.twig' %}
 {% block body %}
-{{ tinymce_init() }}
-<h1 class='menu_sys_h1'>Методы  оплаты</h1>
-
-<table class="records_list">
-    <thead>
-        <tr>
-            <th>Id</th>
-            <th>Компания</th>
-            <th>Номер акаунта</th>
-            <th>Код</th>
-            <th>Действия</th>
-        </tr>
-    </thead>
-    <tbody>
-    {% for entity in entities %}
-        <tr>
-            <td><a href="{{ path('pay_meth_show', { 'id': entity.id }) }}">{{ entity.id }}</a></td>
-            <td>{{ entity.company }}</td>
-            <td>{{ entity.accnum }}</td>
-            <td>{{ entity.kod }}</td>
-            <td>
-                <ul>
-                    <li>
-                        <a href="{{ path('pay_meth_edit', { 'id': entity.id }) }}">edit</a>
-                    </li>
-                </ul>
-            </td>
-        </tr>
-    {% endfor %}
-    </tbody>
-</table>
-
-<ul>
-    <li>
-        <a href="{{ path('pay_meth_new') }}" class="new_window addbutton">
-            Create a new entry
-        </a>
-    </li>
-</ul>
+<div id="resizable">
+        <div class="menu-items-form">
+                <div class="form-title">
+                        <div class="form-title-content">
+                                <div class="search-by-title">
+                                        <label for="title-text">Методы оплаты</label>
+                                </div>
+                                <div class="view-item-count">
+                                </div>
+                                <a href="{{ path( 'pay_meth_new') }}" title="Добавить пункт" class="green-button top-right new_window">
+                                        <span class="left"></span>
+                                        <span class="right">
+                                                Добавить оплату
+                                        </span>
+                                </a>
+                                <div class="clear"></div>
+                        </div>
+                </div>
+                <div class="inside-bearcrumbs">
+                </div>
+                <br />
+                <table class="menu-items-table zebra">
+                        <thead>
+                                <tr>
+                                        <td>
+                                                <div>{{ "id"|trans }}</div>
+                                        </td>
+                                        <td>
+                                                <div>{{ "kod"|trans }}</div>
+                                        </td>
+                                        <td>
+                                                <div>Номер акаунта</div>
+                                        </td>
+                                        <td>
+                                                <div>Компания</div>
+                                        </td>
+                                        <td>
+                                                <div>{{ "actions"|trans }}</div>
+                                        </td>
+                                </tr>
+                        </thead>
+                        <tbody>
+                            {% for entity in entities %}
+                                <tr>
+                                        <td>{{ entity.id }}</td>
+                                        <td>{{ entity.kod }}</td>
+                                        <td>{{ entity.accnum }}</td>
+                                        <td>
+                                                <a href="{{ path( 'pay_meth_edit', { 'id': entity.id }) }}" class="new_window">
+                                                    <i class="icon"></i>{{ entity.company }}
+                                                </a>
+                                        </td>
+                                        <td>
+                                                <div class="controls-table">
+                                                        <a href="{{ path( 'pay_meth_edit', { 'id': entity.id }) }}" title="Изменить" class="chenge new_window"><i></i>{{ "edit"|trans }}</a>
+                                                        {#<a href="#" title="Удалить" onclick="$('#product_delete_{{entity.id}}').submit()" class="del-item"><i></i>{{ "delete"|trans }}</a>#}
+                                                </div>
+                                        </td>
+                                </tr>
+                                {% endfor %}
+                        </tbody>
+                </table>
+                  <a href="{{ path( 'pay_meth_new') }}" title="Добавить пункт" class="green-button top-right new_window">
+                        <span class="left"></span>
+                        <span class="right">
+                                Добавить оплату
+                        </span>
+                </a>
+                <div class="clear"></div>
+        </div>
+</div>
 
 {% endblock %}

@@ -1,4 +1,4 @@
-<h1>Список видео</h1>
+{#<h1>Список видео</h1>
 
 <table class="records_list">
     <thead>
@@ -40,3 +40,75 @@
         </a>
     </li>
 </ul>
+#}
+
+<div id="resizable">
+        <div class="menu-items-form">
+                <div class="form-title">
+                        <div class="form-title-content">
+                                <div class="search-by-title">
+                                        <label for="title-text">Видео</label>
+                                </div>
+                                <div class="view-item-count">
+                                </div>
+                                <a href="{{ path('videos_new', {'video_gal': video_gal}) }}" title="Добавить пункт" class="green-button top-right new_window">
+                                        <span class="left"></span>
+                                        <span class="right">
+                                                Добавить видео
+                                        </span>
+                                </a>
+                                <div class="clear"></div>
+                        </div>
+                </div>
+                <div class="inside-bearcrumbs">
+                </div>
+                <br />
+                <table class="menu-items-table zebra">
+                        <thead>
+                                <tr>
+                                        <td>
+                                                <div>{{ "id"|trans }}</div>
+                                        </td>
+                                        <td>
+                                                <div>{{ "kod"|trans }}</div>
+                                        </td>
+                                        <td>
+                                                <div>Виден</div>
+                                        </td>
+                                        <td>
+                                                <div>Видео</div>
+                                        </td>
+                                        <td>
+                                                <div>{{ "actions"|trans }}</div>
+                                        </td>
+                                </tr>
+                        </thead>
+                        <tbody>
+                            {% for entity in entities %}
+                                <tr>
+                                        <td><a href="{{ path('videos_edit', { 'id': entity.id,'video_gal': video_gal }) }}">{{ entity.id }}</a></td>
+                                        <td>{{ entity.kod }}</td>
+                                        <td>{{ entity.isvisible }}</td>
+                                        <td>
+                                              {% autoescape false %} 
+                                                    {{ entity.content|raw() }}
+                                              {% endautoescape %} 
+                                        </td>
+                                        <td>
+                                                <div class="controls-table">
+                                                        <a href="{{ path('videos_edit', { 'id': entity.id ,'video_gal': video_gal}) }}" title="Изменить" class="chenge new_window"><i></i>{{ "edit"|trans }}</a>
+                                                </div>
+                                        </td>
+                                </tr>
+                                {% endfor %}
+                        </tbody>
+                </table>
+                 <a href="{{ path('videos_new', {'video_gal': video_gal}) }}" title="Добавить пункт" class="green-button top-right new_window">
+                        <span class="left"></span>
+                        <span class="right">
+                                Добавить видео
+                        </span>
+                </a>
+                <div class="clear"></div>
+        </div>
+</div>

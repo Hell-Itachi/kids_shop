@@ -2,23 +2,53 @@
 {% block menu %}
 {% endblock %}
 {% block body %}
-{{ tinymce_init() }}
-<h1>Методы оплаты</h1>
+{% block styles %}
+<style>
 
-<form action="{{ path('pay_meth_create') }}" method="post" {{ form_enctype(form) }}>
-    {{ form_widget(form) }}
-      <div class = 'menu_sys_icon_loader'>
-
-            <div> 
-               {{ form_row( form.iconImage, { 'attr': { 'class': 'hidden_loader' } } ) }}
-
-            </div>
-
+.hidden_loader {
+       cursor: pointer;
+    height: 60px;
+    left: -10px;
+    opacity: 0;
+    position: absolute;
+    right: 0;
+    top: 10px;
+    width: 80px;
+    z-index: 5;
+}
+</style>
+{% endblock %}
+<form action="{{ path('pay_meth_create') }}" method="post" class="menu-items-form" {{ form_enctype(form) }}>
+<div class="form-title form-title-ins">
+        <div class="form-title-content">
+                <i class="item-edit-icon"></i>
+                {{ form_row( form.iconImage, { 'attr': { 'class': 'hidden_loader' } } ) }}
+                <div class="item-controls">
+                        <a href="#" class="save-item" title="Сохранить" onclick="$('.menu-items-form').submit()"></a>
+                        <div class="clear"></div>
+                </div>
+                <span class="title">Методы оплаты</span>
+                <span></span>
+                <div class="clear"></div>
         </div>
-    <p>
-        <button type="submit">Создать</button>
-    </p>
+</div>
+        <br />
+<div class="menu-item-info">
+       <div class="item-info">
+                <label for="item-tag">Компания</label>
+                {{ form_widget( form.company ) }}
+        </div>
+        <div class="item-info">
+                <label for="pid">Код</label>
+                {{ form_widget( form.kod ) }}
+        </div>
+        <div class="item-info">
+                <label for="code">Номер аккаунта</label>
+                {{ form_widget( form.acc_num ) }}
+        </div>
+</div>
+<br />
+{{ form_rest(form) }}
 </form>
-
 
 {% endblock %}
