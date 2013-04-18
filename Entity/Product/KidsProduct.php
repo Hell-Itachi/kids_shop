@@ -34,7 +34,7 @@ class KidsProduct extends ProductChild
      * @ORM\OneToMany (
      * targetEntity="Itc\KidsBundle\Entity\Template\KidsProductAttrvalue",
      * mappedBy="product",
-     * cascade={"persist"}
+     * cascade={"persist", "remove"}
      * )
      */
     private $productattrvalues;
