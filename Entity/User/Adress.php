@@ -31,42 +31,42 @@ class Adress
     /**
      * @var string
      *
-     * @ORM\Column(name="fio", type="string", length=255, nullable="true")
+     * @ORM\Column(name="fio", type="string", length=255,  nullable=true)
      */
     private $fio;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="h_num", type="string", length=20, nullable="true")
+     * @ORM\Column(name="h_num", type="string", length=20, nullable=true)
      */
     private $h_num;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="street", type="string", length=50, nullable="true")
+     * @ORM\Column(name="street", type="string", length=50,  nullable=true)
      */
     private $street;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="city", type="string", length=50, nullable="true")
+     * @ORM\Column(name="city", type="string", length=50, nullable=true)
      */
     private $city;
 
     /**
      * @var integer
      *
-     * @ORM\Column(name="postcode", type="integer", nullable="true")
+     * @ORM\Column(name="postcode", type="integer",  nullable=true)
      */
     private $postcode;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="state", type="string", length=100, nullable="true")
+     * @ORM\Column(name="state", type="string", length=100, nullable=true)
      */
     private $state;
 
