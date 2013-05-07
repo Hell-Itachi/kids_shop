@@ -21,13 +21,14 @@ class KidsProductController extends ProductController
      */
     public function newAction($parent_id)
     {
-        $em = $this->getDoctrine()->getManager();
-        $entitys = $em->getRepository('Itc\KidsBundle\Entity\Product\KidsProductGroup')->findAll();
-        $parent = parent::newAction($parent_id);
-        foreach ($entitys as $entity) {
-           $parent["child"][$entity->getId()]= $entity->getParentId();
-        }
-        return  $parent;        
+        return parent::newAction($parent_id);
+//        $em = $this->getDoctrine()->getManager();
+//        $entitys = $em->getRepository('Itc\KidsBundle\Entity\Product\KidsProductGroup')->findAll();
+//        $parent = parent::newAction($parent_id);
+//        foreach ($entitys as $entity) {
+//           $parent["child"][$entity->getId()]= $entity->getParentId();
+//        }
+//        return  $parent;        
     }
     /**
      *

@@ -5,6 +5,7 @@ namespace Itc\KidsBundle\Entity\Product;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\ORM\Event\LifecycleEventArgs;
 use Itc\KidsBundle\Entity\Product\ProductGroupChild;
+use Vich\UploaderBundle\Mapping\Annotation as Vich;
 use Symfony\Component\Validator\Constraints as Assert;
 use Itc\KidsBundle\Entity\Product\KidsProduct;
 use Gedmo\Mapping\Annotation as Gedmo;
@@ -13,6 +14,7 @@ use Gedmo\Mapping\Annotation as Gedmo;
  * KidsProductGroup
  * @ORM\Table()
  * @ORM\Entity
+ * @Vich\Uploadable
  * @ORM\HasLifecycleCallbacks
  */
 class KidsProductGroup extends ProductGroupChild
