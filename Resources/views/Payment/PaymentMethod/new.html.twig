@@ -19,12 +19,13 @@
 </style>
 {% endblock %}
 <form action="{{ path('pay_meth_create') }}" method="post" class="menu-items-form" {{ form_enctype(form) }}>
+    <input type="submit" class="menu-items-form-button" style="display:none;"/>
 <div class="form-title form-title-ins">
         <div class="form-title-content">
                 <i class="item-edit-icon"></i>
                 {{ form_row( form.iconImage, { 'attr': { 'class': 'hidden_loader' } } ) }}
                 <div class="item-controls">
-                        <a href="#" class="save-item" title="Сохранить" onclick="$('.menu-items-form').submit()"></a>
+                        <a href="#" class="save-item" title="Сохранить" onclick="$('.menu-items-form-button').trigger('click')"></a>
                         <div class="clear"></div>
                 </div>
                 <span class="title">Методы оплаты</span>
